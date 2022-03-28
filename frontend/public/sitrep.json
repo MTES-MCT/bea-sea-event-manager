@@ -1,0 +1,86 @@
+[
+  {
+    "id": 0,
+    "shipName": "Ship A",
+    "shipType": "Professional",
+    "eventType": "Fall to the sea",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 1,
+    "shipName": "Ship B",
+    "shipType": "Pleasure-sailing",
+    "eventType": "Collision with other ship",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 2,
+    "shipName": "Ship C",
+    "shipType": "Pleasure-sailing",
+    "eventType": "Damage",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 3,
+    "shipName": "Ship D",
+    "shipType": "Professional",
+    "eventType": "Loss of equipment",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 4,
+    "shipName": "Ship E",
+    "shipType": "Pleasure-sailing",
+    "eventType": "Damage",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 5,
+    "shipName": "Ship F",
+    "shipType": "Pleasure-sailing",
+    "eventType": "Stranding",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 6,
+    "shipName": "Ship G",
+    "shipType": "Professional",
+    "eventType": "Fire",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 7,
+    "shipName": "Ship H",
+    "shipType": "Pleasure-sailing",
+    "eventType": "Explosion",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 8,
+    "shipName": "Ship I",
+    "shipType": "Professional",
+    "eventType": "Loss of electrical power",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 9,
+    "shipName": "Ship J",
+    "shipType": "Professional",
+    "eventType": "Loss of propulsion power",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 10,
+    "shipName": "Ship K",
+    "shipType": "Pleasure-sailing",
+    "eventType": "Loss of directional control",
+    "eventDate": "2022-02-02T22:12:33Z"
+  },
+  {
+    "id": 11,
+    "shipName": "Ship L",
+    "shipType": "Pleasure-sailing",
+    "eventType": "Grounding",
+    "eventDate": "2022-02-02T22:12:33Z"
+  }
+]
