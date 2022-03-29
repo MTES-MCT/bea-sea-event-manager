@@ -1,3 +1,3 @@
 # sea-event-manager-bea
 
-Un outil d'aide à la saisie vers EMCIP à destination des enquêteurs du BEA Mer.
+Entry assistance tool for BEAMer investigators to the EMCIP database.
