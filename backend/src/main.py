@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 
+from src.routes import default_router
+
 app = FastAPI()
 
-
-@app.get("/", status_code=200)
-def live():
-    return {"message": "Hello World"}
+app.include_router(default_router, prefix="")

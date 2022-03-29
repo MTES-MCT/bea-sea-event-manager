@@ -9,3 +9,6 @@ install:
 
 lint:
 	poetry run black src tests
+
+static_check:
+	poetry run mypy src tests
