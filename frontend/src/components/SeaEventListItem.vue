@@ -13,13 +13,16 @@
     :buttonLabel="editFormButtonLabel"
     @editForm="redirect"
   ></edit-form-button>
+  <ignore-button :textButton="'Ignorer'" @ignore="ignore()"></ignore-button>
 </template>
 
 <script lang="ts" setup>
 import { SeaEventSummary } from "@/model/SeaEventSummary";
 import { useRouter } from "vue-router";
 import EditFormButton from "@/components/EditFormButton.vue";
-import { defineProps, withDefaults } from "vue";
+import { defineProps, withDefaults, defineEmits } from "vue";
+import IgnoreButton from "@/components/IgnoreButton.vue";
+import { archiveSeaEvent } from "@/connectors/seaEventAccess";
 
 interface Props {
   seaEventItem: SeaEventSummary;
@@ -28,11 +31,21 @@ interface Props {
 const editFormButtonLabel = "Traiter";
 const router = useRouter();
 const props = withDefaults(defineProps<Props>(), {});
+const emit = defineEmits(["remove"]);
 
 function redirect() {
   router.push({
     name: "EmcipForm",
     params: { seaEventUUID: props.seaEventItem.uuid },
   });
+}
+
+function ignore() {
+  archiveSeaEvent(props.seaEventItem.uuid);
+  callForRemoval();
+}
+
+function callForRemoval(): void {
+  emit("remove");
 }
 </script>
