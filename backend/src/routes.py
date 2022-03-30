@@ -1,5 +1,5 @@
 from fastapi.routing import APIRouter
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from src.usecases import get_sea_events
 
@@ -15,22 +15,23 @@ def live():
 class SeaEventOutput(BaseModel):
     class Config:
         orm_mode = True
+        allow_population_by_field_name = True
 
     uuid: str
     label: str
     type: str
     date: str
     time: str
-    CrossEntity: str
-    sitrepNumber: str
+    cross_entity: str = Field(..., alias="crossEntity")
+    sitrep_number: str = Field(..., alias="sitrepNumber")
     region: str
-    shipType: str
-    imoNumber: str
-    immatNumber: str
+    ship_type: str = Field(..., alias="shipType")
+    imo_number: str = Field(..., alias="imoNumber")
+    immat_number: str = Field(..., alias="immatNumber")
     lht: str
-    casualtyNumber: str
-    missingNumber: str
-    injuredNumber: str
+    casualty_number: str = Field(..., alias="casualtyNumber")
+    missing_number: str = Field(..., alias="missingNumber")
+    injured_number: str = Field(..., alias="injuredNumber")
 
 
 @default_router.get("/sea-events", status_code=200, response_model=list[SeaEventOutput])

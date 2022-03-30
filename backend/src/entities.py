@@ -8,13 +8,13 @@ class SeaEvent(BaseModel):
     type: str
     date: str
     time: str
-    CrossEntity: str
-    sitrepNumber: str
+    cross_entity: str
+    sitrep_number: str
     region: str
-    shipType: str
-    imoNumber: str
-    immatNumber: str
+    ship_type: str
+    imo_number: str
+    immat_number: str
     lht: str
-    casualtyNumber: str
-    missingNumber: str
-    injuredNumber: str
+    casualty_number: str
+    missing_number: str
+    injured_number: str
