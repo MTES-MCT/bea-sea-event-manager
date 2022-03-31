@@ -46,6 +46,33 @@ def retrieve_sea_events():
 
 class SeaEventOutputDetailed(ApiSchema):
     uuid: str
+    ship_name: str = Field(..., alias="shipName")
+    event_type: str = Field(..., alias="eventType")
+    occurrence_date: str = Field(..., alias="occurrenceDate")
+    occurrence_time: str = Field(..., alias="occurrenceTime")
+    occurrence_national_id: str = Field(..., alias="occurrenceNationalId")
+    notification_date: str = Field(..., alias="notificationDate")
+    notification_time: str = Field(..., alias="notificationTime")
+    notification_entity: str = Field(..., alias="notificationEntity")
+    directive_2009_18: str = Field(..., alias="directive_2009_18")
+    coastal_state: str = Field(..., alias="coastalState")
+    lattitude: str = Field(..., alias="lattitude")
+    longitude: str = Field(..., alias="longitude")
+    call_sign: str = Field(..., alias="callSign")
+    flag_state: str = Field(..., alias="flagState")
+    gross_tonnage: str = Field(..., alias="grossTonnage")
+    built_year: str = Field(..., alias="builtYear")
+    hull_material: str = Field(..., alias="hullMaterial")
+    propulsion_type: str = Field(..., alias="propulsionType")
+    national_location: str = Field(..., alias="nationalLocation")
+    registry_number: str = Field(..., alias="registryNumber")
+    imo: str = Field(..., alias="IMO")
+    occurrence_sea_area: str = Field(..., alias="occurrenceSeaArea")
+    ship_type: str = Field(..., alias="shipType")
+    overall_length: str = Field(..., alias="overallLength")
+    nb_lives_lost: str = Field(..., alias="nbLivesLost")
+    nb_missing_people: str = Field(..., alias="nbMissingPeople")
+    nb_injured_people: str = Field(..., alias="nbInjuredPeople")
 
 
 @default_router.get(

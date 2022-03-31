@@ -7,7 +7,9 @@ from src.entities import SeaEvent
 
 
 @pytest.mark.parametrize("dataset_name", ["sea-events-1", "sea-events-2"])
-def test_retrieve_sea_events(monkeypatch, dataset_sea_events: dict[str, list[SeaEvent]], dataset_name: str):
+def test_retrieve_sea_events(
+    monkeypatch, dataset_sea_events: dict[str, list[SeaEvent]], dataset_name: str
+):
     sea_events_to_retrieve = dataset_sea_events[dataset_name]
 
     monkeypatch.setattr(routes, "get_sea_events", lambda: sea_events_to_retrieve.copy())
