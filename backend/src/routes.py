@@ -18,20 +18,20 @@ class SeaEventOutput(BaseModel):
         allow_population_by_field_name = True
 
     uuid: str
-    label: str
-    type: str
-    date: str
-    time: str
-    cross_entity: str = Field(..., alias="crossEntity")
-    sitrep_number: str = Field(..., alias="sitrepNumber")
-    region: str
-    ship_type: str = Field(..., alias="shipType")
-    imo_number: str = Field(..., alias="imoNumber")
-    immat_number: str = Field(..., alias="immatNumber")
-    lht: str
-    casualty_number: str = Field(..., alias="casualtyNumber")
-    missing_number: str = Field(..., alias="missingNumber")
-    injured_number: str = Field(..., alias="injuredNumber")
+    ship_name: str = Field(None, alias="label")
+    event_type: str = Field(None, alias="type")
+    occurrence_date: str = Field(None, alias="date")
+    occurrence_time: str = Field(None, alias="time")
+    notification_entity: str = Field(None, alias="crossEntity")
+    occurrence_national_id: str = Field(None, alias="sitrepNumber")
+    registry_number: str = Field(None, alias="immatNumber")
+    imo: str = Field(None, alias="imoNumber")
+    occurrence_sea_area: str = Field(None, alias="region")
+    ship_type: str = Field(None, alias="shipType")
+    overall_length: str = Field(None, alias="lht")
+    nb_lives_lost: str = Field(None, alias="casualtyNumber")
+    nb_missing_people: str = Field(None, alias="missingNumber")
+    nb_injured_people: str = Field(None, alias="injuredNumber")
 
 
 @default_router.get("/sea-events", status_code=200, response_model=list[SeaEventOutput])
