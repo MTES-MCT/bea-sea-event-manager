@@ -26,20 +26,20 @@ def test_get_all(initial_sea_events_persisted_data):
     expected_sea_events = [
         SeaEvent(
             uuid=sea_event["uuid"],
-            label=sea_event["label"],
-            type=sea_event["type"],
-            date=sea_event["date"],
-            time=sea_event["time"],
-            cross_entity=sea_event["crossEntity"],
-            sitrep_number=sea_event["sitrepNumber"],
-            region=sea_event["region"],
+            ship_name=sea_event["shipName"],
+            event_type=sea_event["eventType"],
+            occurrence_date=sea_event["occurrenceDate"],
+            occurrence_time=sea_event["occurrenceTime"],
+            occurrence_national_id=sea_event["occurrenceNationalId"],
+            notification_entity=sea_event["notificationEntity"],
+            registry_number=sea_event["registryNumber"],
+            imo=sea_event["IMO"],
+            occurrence_sea_area=sea_event["occurrenceSeaArea"],
             ship_type=sea_event["shipType"],
-            imo_number=sea_event["imoNumber"],
-            immat_number=sea_event["immatNumber"],
-            lht=sea_event["lht"],
-            casualty_number=sea_event["casualtyNumber"],
-            missing_number=sea_event["missingNumber"],
-            injured_number=sea_event["injuredNumber"],
+            overall_length=sea_event["overallLength"],
+            nb_lives_lost=sea_event["nbLivesLost"],
+            nb_injured_people=sea_event["nbInjuredPeople"],
+            nb_missing_people=sea_event["nbMissingPeople"],
         )
         for sea_event in initial_sea_events_persisted_data
     ]
