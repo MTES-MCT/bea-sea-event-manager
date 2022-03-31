@@ -1,8 +1,9 @@
 from fastapi.routing import APIRouter
+from fastapi.exceptions import HTTPException
 from pydantic import BaseModel, Field
 
-from src.usecases import get_sea_events
-
+from src.usecases import get_sea_events, get_sea_event_by_uuid
+from src.exceptions import SeaEventNotFoundError
 
 default_router = APIRouter()
 
@@ -12,10 +13,13 @@ def live():
     return {"message": "Hello World"}
 
 
-class SeaEventOutput(BaseModel):
+class ApiSchema(BaseModel):
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
+
+
+class SeaEventOutput(ApiSchema):
 
     uuid: str
     label: str
@@ -38,3 +42,19 @@ class SeaEventOutput(BaseModel):
 def retrieve_sea_events():
     all_sea_events = get_sea_events()
     return [SeaEventOutput.from_orm(sea_event) for sea_event in all_sea_events]
+
+
+class SeaEventOutputDetailed(ApiSchema):
+    uuid: str
+
+
+@default_router.get(
+    "/sea-events/{uuid}", status_code=200, response_model=SeaEventOutputDetailed
+)
+def retrieve_sea_event_by_uuid(uuid: str):
+    try:
+        sea_event = get_sea_event_by_uuid(uuid=uuid)
+    except SeaEventNotFoundError:
+        raise HTTPException(status_code=404, detail="Sea event not found")
+
+    return SeaEventOutputDetailed.from_orm(sea_event)
