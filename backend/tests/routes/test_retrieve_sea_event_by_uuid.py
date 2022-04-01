@@ -45,6 +45,7 @@ def test_retrieve_sea_event_by_uuid(
         "nbLivesLost": sea_event_to_retrieve.nb_lives_lost,
         "nbMissingPeople": sea_event_to_retrieve.nb_missing_people,
         "nbInjuredPeople": sea_event_to_retrieve.nb_injured_people,
+        "processingStatus": sea_event_to_retrieve.processing_status,
     }
 
     response = client.get("/sea-events/{uuid}")

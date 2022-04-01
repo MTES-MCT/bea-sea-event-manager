@@ -31,6 +31,7 @@ def test_retrieve_sea_events(
             "casualtyNumber": sea_event.nb_lives_lost,
             "missingNumber": sea_event.nb_missing_people,
             "injuredNumber": sea_event.nb_injured_people,
+            "processingStatus": sea_event.processing_status,
         }
         for sea_event in sea_events_to_retrieve
     ]

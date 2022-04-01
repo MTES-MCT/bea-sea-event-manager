@@ -31,3 +31,4 @@ class SeaEvent(BaseModel):
     nb_lives_lost: str
     nb_injured_people: str
     nb_missing_people: str
+    processing_status: str

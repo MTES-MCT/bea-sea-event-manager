@@ -36,6 +36,7 @@ def dataset_sea_events_as_dict() -> dict[str, list[dict]]:
                 "nbLivesLost": "lives-lost-1",
                 "nbInjuredPeople": "injured-people-1",
                 "nbMissingPeople": "missing-people-1",
+                "processingStatus": "to-process",
             },
             {
                 "uuid": "acf2178e-6502-4c4f-8117-39a8315be94c",
@@ -66,6 +67,7 @@ def dataset_sea_events_as_dict() -> dict[str, list[dict]]:
                 "nbLivesLost": "lives-lost-2",
                 "nbInjuredPeople": "injured-people-2",
                 "nbMissingPeople": "missing-people-2",
+                "processingStatus": "to-process",
             },
         ],
         "sea-events-2": [
@@ -98,6 +100,7 @@ def dataset_sea_events_as_dict() -> dict[str, list[dict]]:
                 "nbLivesLost": "lives-lost-3",
                 "nbInjuredPeople": "injured-people-3",
                 "nbMissingPeople": "missing-people-3",
+                "processingStatus": "to-process",
             },
             {
                 "uuid": "acf2178e-6502-4c4f-8117-39a8315be944",
@@ -128,6 +131,7 @@ def dataset_sea_events_as_dict() -> dict[str, list[dict]]:
                 "nbLivesLost": "lives-lost-4",
                 "nbInjuredPeople": "injured-people-4",
                 "nbMissingPeople": "missing-people-4",
+                "processingStatus": "ignored",
             },
         ],
     }
@@ -169,6 +173,7 @@ def dataset_sea_events(
                 nb_lives_lost=sea_event_dict["nbLivesLost"],
                 nb_injured_people=sea_event_dict["nbInjuredPeople"],
                 nb_missing_people=sea_event_dict["nbMissingPeople"],
+                processing_status=sea_event_dict["processingStatus"],
             )
             for sea_event_dict in dataset_sea_events_as_dict[dataset_name]
         ]

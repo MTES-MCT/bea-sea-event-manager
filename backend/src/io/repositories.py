@@ -52,6 +52,7 @@ class SeaEventRepository:
             nb_lives_lost=sea_event_dict["nbLivesLost"],
             nb_injured_people=sea_event_dict["nbInjuredPeople"],
             nb_missing_people=sea_event_dict["nbMissingPeople"],
+            processing_status=sea_event_dict["processingStatus"],
         )
 
 

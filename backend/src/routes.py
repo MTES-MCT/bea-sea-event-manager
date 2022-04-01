@@ -36,6 +36,7 @@ class SeaEventOutput(ApiSchema):
     nb_lives_lost: str = Field(..., alias="casualtyNumber")
     nb_missing_people: str = Field(..., alias="missingNumber")
     nb_injured_people: str = Field(..., alias="injuredNumber")
+    processing_status: str = Field(..., alias="processingStatus")
 
 
 @default_router.get("/sea-events", status_code=200, response_model=list[SeaEventOutput])
@@ -73,6 +74,7 @@ class SeaEventOutputDetailed(ApiSchema):
     nb_lives_lost: str = Field(..., alias="nbLivesLost")
     nb_missing_people: str = Field(..., alias="nbMissingPeople")
     nb_injured_people: str = Field(..., alias="nbInjuredPeople")
+    processing_status: str = Field(..., alias="processingStatus")
 
 
 @default_router.get(
