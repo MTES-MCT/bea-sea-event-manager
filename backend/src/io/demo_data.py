@@ -28,6 +28,7 @@ demo_sea_events = [
         "nbLivesLost": "0",
         "nbInjuredPeople": "1",
         "nbMissingPeople": "0",
+        "processingStatus": "to-process",
     },
     {
         "uuid": "326adf8b2e0-aca4-404b-9342-f69e5013545h",
@@ -58,5 +59,6 @@ demo_sea_events = [
         "nbLivesLost": "0",
         "nbInjuredPeople": "0",
         "nbMissingPeople": "0",
+        "processingStatus": "to-process",
     },
 ]
