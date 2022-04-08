@@ -42,10 +42,10 @@ function redirect() {
 
 function ignore() {
   archiveSeaEvent(props.seaEventItem.uuid);
-  callForRemoval();
+  emitEvent();
 }
 
-function callForRemoval(): void {
+function emitEvent() {
   emit("remove");
 }
 </script>

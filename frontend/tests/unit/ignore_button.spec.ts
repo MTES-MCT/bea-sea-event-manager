@@ -1,32 +1,45 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import IgnoreButton from "@/components/IgnoreButton.vue";
 
-const mountIgnoreButtonComponent = async () => {
+const mountIgnoreButtonComponent = async (textButton: string = "ignorer") => {
   const ignoreButton = shallowMount(IgnoreButton, {
-    props: {},
+    props: {
+      textButton: textButton,
+    },
   });
 
   return ignoreButton;
 };
 
 describe("IgnoreButton", () => {
-  describe("When clicking on the button", () => {
-    describe("When API call is successful", () => {
-      it("should remove the item from the sea event list item", () => {
-        // given the ignore button component
-        // given a list of items
-        // when clicking on the ignore button
-        // when checking the response from API
-        // expect item to be remove from the list of items
-      });
+  describe("when component is displayed", () => {
+    it("should be a button", async () => {
+      const ignoreButton = await mountIgnoreButtonComponent();
+
+      expect(ignoreButton.element.tagName).toBe("BUTTON");
     });
-    describe("When API call fails", () => {
-      it("should return an error message", () => {
-        // given the ignore button component
-        // given a list of items
-        // when clicking on the ignore button
-        // when checking the response from API
-        // expect display of error message
+    it.each(["Ignorer", "Annuler"])(
+      "should display expected text button",
+      async (expectedTextButton) => {
+        const ignoreButton = await mountIgnoreButtonComponent(
+          expectedTextButton
+        );
+
+        expect(ignoreButton.text()).toBe(expectedTextButton);
+      }
+    );
+    describe("When component is clicked", () => {
+      it("should emit an ignore event", async () => {
+        const ignoreButton = await mountIgnoreButtonComponent();
+        const expectedEmittedEvent = "ignore";
+        const expectedNbIgnoreEvent = 1;
+        ignoreButton.trigger("click");
+
+        expect(ignoreButton.emitted).toBeTruthy();
+        expect(ignoreButton.emitted()[expectedEmittedEvent]).toBeTruthy();
+        expect(ignoreButton.emitted()[expectedEmittedEvent].length).toBe(
+          expectedNbIgnoreEvent
+        );
       });
     });
   });

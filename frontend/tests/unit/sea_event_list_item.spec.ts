@@ -1,3 +1,4 @@
+import IgnoreButton from "@/components/IgnoreButton.vue";
 import { shallowMount } from "@vue/test-utils";
 import SeaEventItem from "@/components/SeaEventListItem.vue";
 import EditFormButton from "@/components/EditFormButton.vue";
@@ -215,5 +216,28 @@ describe("SeaEventItem.vue", () => {
     expect(seaEventItem.findComponent(EditFormButton).html()).toContain(
       "Traiter"
     );
+  });
+  it("should display an ignore button labelled 'Ignorer'", async () => {
+    const seaEventItem = await mountSeaEventListItemComponent();
+
+    expect(seaEventItem.findComponent(IgnoreButton).exists()).toBeTruthy();
+    expect(seaEventItem.findComponent(IgnoreButton).html()).toContain(
+      "Ignorer"
+    );
+  });
+  describe("when the ignore button emits 'ignore'", () => {
+    it("should emit a remove event", async () => {
+      const seaEventItem = await mountSeaEventListItemComponent();
+      const expectedEmittedEvent = "remove";
+      const expectedNRemoveEvent = 1;
+
+      await seaEventItem.findComponent(IgnoreButton).vm.$emit("ignore");
+
+      expect(seaEventItem.emitted).toBeTruthy();
+      expect(seaEventItem.emitted()[expectedEmittedEvent]).toBeTruthy();
+      expect(seaEventItem.emitted()[expectedEmittedEvent].length).toBe(
+        expectedNRemoveEvent
+      );
+    });
   });
 });

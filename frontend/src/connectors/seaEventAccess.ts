@@ -6,11 +6,9 @@ export function registerSeaEventForm(
 ): void {
   console.log("registerSeaEventForm called with", seaEventFormData);
 }
-
 export function archiveSeaEvent(seaEventUUID: string): void {
-  console.log("archiveSeaEvent called with", seaEventUUID);
+  console.log("seaEventUUID : ", seaEventUUID);
 }
-
 export function getSeaEventFormData(seaEventUUID: string): SeaEventFormLine[] {
   const seaEventDemo: {
     [key: string]: any;

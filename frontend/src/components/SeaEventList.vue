@@ -3,14 +3,14 @@
     <h1>Liste des évènements de mer</h1>
     <li
       class="list-group-item d-flex justify-content-between"
-      v-for="seaEvent in displayedSeaEvents"
+      v-for="seaEvent in displayedSeaEventList"
       v-bind:key="seaEvent.uuid"
     >
-      <sea-event-list-item-vue
+      <sea-event-list-item
         :seaEventItem="seaEvent"
-        @remove="removeFromList(seaEvent)"
+        @remove="removeSeaEventFromList(seaEvent)"
       >
-      </sea-event-list-item-vue>
+      </sea-event-list-item>
     </li>
   </div>
 </template>
@@ -18,17 +18,17 @@
 <script lang="ts" setup>
 import { SeaEventSummary } from "@/model/SeaEventSummary";
 import { defineProps, ref } from "vue";
-import SeaEventListItemVue from "@/components/SeaEventListItem.vue";
+import SeaEventListItem from "@/components/SeaEventListItem.vue";
 
 const props = defineProps<{
   seaEventList: SeaEventSummary[];
 }>();
 
-const displayedSeaEvents = ref([...props.seaEventList]);
+const displayedSeaEventList = ref([...props.seaEventList]);
 
-function removeFromList(seaEventItem: SeaEventSummary): void {
-  const index = displayedSeaEvents.value.indexOf(seaEventItem);
-  displayedSeaEvents.value.splice(index, 1);
+function removeSeaEventFromList(seaEventItem: SeaEventSummary): void {
+  const index = displayedSeaEventList.value.indexOf(seaEventItem);
+  displayedSeaEventList.value.splice(index, 1);
 }
 </script>
 
