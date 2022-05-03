@@ -12,35 +12,18 @@ const mountIgnoreButtonComponent = async (textButton: string = "ignorer") => {
 };
 
 describe("IgnoreButton", () => {
-  describe("when component is displayed", () => {
-    it("should be a button", async () => {
+  describe("When component is clicked", () => {
+    it("should emit an ignore event", async () => {
       const ignoreButton = await mountIgnoreButtonComponent();
+      const expectedEmittedEvent = "ignore";
+      const expectedNbIgnoreEvent = 1;
+      ignoreButton.trigger("click");
 
-      expect(ignoreButton.element.tagName).toBe("BUTTON");
-    });
-    it.each(["Ignorer", "Annuler"])(
-      "should display expected text button",
-      async (expectedTextButton) => {
-        const ignoreButton = await mountIgnoreButtonComponent(
-          expectedTextButton
-        );
-
-        expect(ignoreButton.text()).toBe(expectedTextButton);
-      }
-    );
-    describe("When component is clicked", () => {
-      it("should emit an ignore event", async () => {
-        const ignoreButton = await mountIgnoreButtonComponent();
-        const expectedEmittedEvent = "ignore";
-        const expectedNbIgnoreEvent = 1;
-        ignoreButton.trigger("click");
-
-        expect(ignoreButton.emitted).toBeTruthy();
-        expect(ignoreButton.emitted()[expectedEmittedEvent]).toBeTruthy();
-        expect(ignoreButton.emitted()[expectedEmittedEvent].length).toBe(
-          expectedNbIgnoreEvent
-        );
-      });
+      expect(ignoreButton.emitted).toBeTruthy();
+      expect(ignoreButton.emitted()[expectedEmittedEvent]).toBeTruthy();
+      expect(ignoreButton.emitted()[expectedEmittedEvent].length).toBe(
+        expectedNbIgnoreEvent
+      );
     });
   });
 });

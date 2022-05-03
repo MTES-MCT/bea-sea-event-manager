@@ -1,5 +1,5 @@
 <template>
-  <button class="fr-btn fr-btn--tertiary" @click="emitEvent">
+  <button class="fr-btn fr-btn--tertiary" @click="ignoreEvent">
     {{ textButton }}
   </button>
 </template>
@@ -13,7 +13,7 @@ interface Props {
 withDefaults(defineProps<Props>(), { textButton: "" });
 
 const emit = defineEmits(["ignore"]);
-function emitEvent() {
+function ignoreEvent() {
   emit("ignore");
 }
 </script>
