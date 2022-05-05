@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "django-sea-events-manager"
+version = "0.1.0"
+description = ""
+authors = ["Philippe GALVAN <git.philippeG@outlook.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.0.4"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
