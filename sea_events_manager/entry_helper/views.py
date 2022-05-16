@@ -21,9 +21,10 @@ from django.views.generic import ListView
 
 from entry_helper.models import Report
 from entry_helper.internals import switch_report_to_done
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ReportTodoListView(ListView):
+class ReportTodoListView(LoginRequiredMixin, ListView):
     model = Report
     queryset = Report.objects.filter(status="todo")
 
@@ -39,7 +40,7 @@ class ReportTodoListView(ListView):
         return redirect("entry_helper:reports")
 
 
-class ReportDoneListView(ListView):
+class ReportDoneListView(LoginRequiredMixin, ListView):
     model = Report
     queryset = Report.objects.filter(status="done")
 
