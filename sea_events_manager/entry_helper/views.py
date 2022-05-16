@@ -20,14 +20,18 @@ class ReportTodoListView(ReportListView):
     template_name: str = "entry_helper/report_todo.html"
 
     def post(self, request):
-        if report_uuid := request.POST.get("report_uuid", None):
-            report = Report.objects.get(uuid=report_uuid)
-            switch_report_to_done(report)
-
-        return redirect("entry_helper:reports")
+        _post_with_push_to_emcip(request, "entry_helper:reports")
 
 
 class ReportDoneListView(ReportListView):
     queryset = Report.objects.filter(status="done")
 
     template_name: str = "entry_helper/report_done.html"
+
+
+def _post_with_push_to_emcip(request, django_redirect_url: str):
+    if report_uuid := request.POST.get("report_uuid", None):
+        report = Report.objects.get(uuid=report_uuid)
+        switch_report_to_done(report)
+
+    return redirect(django_redirect_url)
