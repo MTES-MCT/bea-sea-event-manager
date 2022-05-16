@@ -43,7 +43,7 @@ class ReportIgnoredListView(ReportTodoListView):
     template_name: str = "entry_helper/reports.html"
     extra_context={
         'title_content': "Rapports ignorés",
-        'report_list_status_type': "todo",
+        'report_list_status_type': "ignored",
     }
 
     def post(self, request):
