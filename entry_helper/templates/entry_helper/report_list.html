@@ -18,7 +18,10 @@
                     ---
                 </div>
                 <ul>
-                    <li>date évènement: {{ object.event_date }}</li>
+                    <li>date évènement: 
+                        {{ object.event_datetime|date:"D d M Y" }} 
+                        at {{ object.event_datetime|time:"H:i" }}
+                    </li>
                     <li>cross: {{ object.declarative_entity }}</li>
                     <li>lieu de l'évènement: {{ object.event_location }}</li>
                     <li>nom du navire: {{ object.ship_name }}</li>
