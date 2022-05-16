@@ -8,7 +8,7 @@ class Report(models.Model):
     report_number = models.TextField()
     name = models.TextField()
     imo_number = models.TextField(null=True)
-    national_id = models.TextField(null=True)
+    registration_number = models.TextField(null=True)
     declarative_entity = models.TextField()
     event_location = models.TextField()
     event_datetime = models.DateTimeField()
