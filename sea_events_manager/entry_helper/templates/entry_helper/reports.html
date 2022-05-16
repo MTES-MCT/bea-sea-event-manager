@@ -42,6 +42,13 @@
                         <input type="submit" value="Push to EMCIP">
                     </form>
                 {% endif %}
+                {% if report_list_status_type == 'todo' %}
+                    <form action="{% url 'entry_helper:reports_ignored' %}" method="post">
+                        <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                        {% csrf_token %}
+                        <input type="submit" value="Ignorer">
+                    </form>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
