@@ -6,14 +6,18 @@ from entry_helper.internals import switch_report_to_done
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ReportTodoListView(LoginRequiredMixin, ListView):
+class ReportListView(LoginRequiredMixin, ListView):
     model = Report
+
+    ordering = ["-event_datetime"]
+
+    login_url = '/admin/login/'
+
+
+class ReportTodoListView(ReportListView):
     queryset = Report.objects.filter(status="todo")
 
     template_name: str = "entry_helper/report_todo.html"
-    login_url = '/admin/login/'
-
-    ordering = ["-event_datetime"]
 
     def post(self, request):
         if report_uuid := request.POST.get("report_uuid", None):
@@ -23,11 +27,7 @@ class ReportTodoListView(LoginRequiredMixin, ListView):
         return redirect("entry_helper:reports")
 
 
-class ReportDoneListView(LoginRequiredMixin, ListView):
-    model = Report
+class ReportDoneListView(ReportListView):
     queryset = Report.objects.filter(status="done")
 
     template_name: str = "entry_helper/report_done.html"
-    login_url = '/admin/login/'
-
-    ordering = ["-event_datetime"]
