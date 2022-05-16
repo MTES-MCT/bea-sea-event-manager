@@ -18,3 +18,5 @@ from entry_helper.models import Report
 
 class ReportListView(ListView):
     model = Report
+
+    ordering = ['-event_datetime']
