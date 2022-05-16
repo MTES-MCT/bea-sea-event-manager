@@ -6,7 +6,7 @@ from django.db import models
 class Report(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     report_number = models.TextField()
-    name = models.TextField()
+    ship_name = models.TextField()
     imo_number = models.TextField(null=True)
     registration_number = models.TextField(null=True)
     declarative_entity = models.TextField()
