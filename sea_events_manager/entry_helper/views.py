@@ -27,6 +27,8 @@ class ReportTodoListView(ListView):
     model = Report
     queryset = Report.objects.filter(status="todo")
 
+    template_name: str = "entry_helper/report_todo.html"
+
     ordering = ["-event_datetime"]
 
     def post(self, request):
