@@ -13,6 +13,7 @@ class Report(models.Model):
     event_location = models.TextField()
     event_datetime = models.DateTimeField()
     event_type = models.TextField()
+    status = models.TextField(default="todo")
 
     def __str__(self):
         return self.report_number
