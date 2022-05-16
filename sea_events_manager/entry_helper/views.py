@@ -27,8 +27,11 @@ class ReportTodoListView(ReportListView):
 class ReportDoneListView(ReportListView):
     queryset = Report.objects.filter(status="done")
 
-    template_name: str = "entry_helper/report_done.html"
-    extra_context={'title_content': "Rapports investigués"}
+    template_name: str = "entry_helper/report_todo.html"
+    extra_context={
+        'title_content': "Rapports investigués",
+        'report_list_status_type': "done",
+    }
 
 
 class ReportIgnoredListView(ReportTodoListView):

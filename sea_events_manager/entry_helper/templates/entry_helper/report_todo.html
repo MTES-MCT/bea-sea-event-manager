@@ -35,11 +35,13 @@
                     <li>immatriculation du navire: {{ object.national_id }}</li>
                     <li>type d'évènement: {{ object.event_type }}</li>
                 </ul>
-                <form action="{% url 'entry_helper:reports' %}" method="post">
-                    <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
-                    {% csrf_token %}
-                    <input type="submit" value="Push to EMCIP">
-                </form>
+                {% if report_list_status_type != 'done' %}
+                    <form action="{% url 'entry_helper:reports' %}" method="post">
+                        <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                        {% csrf_token %}
+                        <input type="submit" value="Push to EMCIP">
+                    </form>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
