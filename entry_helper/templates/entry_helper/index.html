@@ -1,0 +1,35 @@
+{% load static dsfr_tags %}
+<!doctype html>
+<html lang="fr" {% if SITE_CONFIG.mourning %}data-fr-mourning{% endif %}>
+    
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    {% dsfr_css %}
+    {% dsfr_favicon %}
+    {% block extra_css %}{% endblock extra_css %}
+</head>
+
+<body>
+    {% block skiplinks %}
+        {% dsfr_skiplinks skiplinks %}
+    {% endblock skiplinks %}
+    {% dsfr_theme_modale %}
+    <div>
+        <h1>Rapports SITREP</h1>
+        <div class="test">
+            {% for report in reports %}
+               <div>
+                   {{ report }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+  {% dsfr_js %}
+  {% block extra_js %}{% endblock extra_js %}
+</body>
+
+</html>

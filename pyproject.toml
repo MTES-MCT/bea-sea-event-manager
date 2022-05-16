@@ -3,13 +3,10 @@ name = "django-sea-events-manager"
 version = "0.1.0"
 description = ""
 authors = ["Philippe GALVAN <git.philippeG@outlook.com>"]
-packages = [
-    {include = "sea_events_manager"}
-]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-Django = "^4.0.4"
+django-dsfr = "^0.7.3"
 
 [tool.poetry.dev-dependencies]
 
