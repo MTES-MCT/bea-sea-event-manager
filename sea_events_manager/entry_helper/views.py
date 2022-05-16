@@ -18,7 +18,10 @@ class ReportTodoListView(ReportListView):
     queryset = Report.objects.filter(status="todo")
 
     template_name: str = "entry_helper/reports.html"
-    extra_context={'title_content': "Rapports à traiter"}
+    extra_context={
+        'title_content': "Rapports à traiter",
+        'report_list_status_type': "todo",
+    }
 
     def post(self, request):
         _post_with_push_to_emcip(request, "entry_helper:reports")
@@ -38,7 +41,10 @@ class ReportIgnoredListView(ReportTodoListView):
     queryset = Report.objects.filter(status="ignored")
 
     template_name: str = "entry_helper/reports.html"
-    extra_context={'title_content': "Rapports ignorés"}
+    extra_context={
+        'title_content': "Rapports ignorés",
+        'report_list_status_type': "todo",
+    }
 
     def post(self, request):
         _post_with_push_to_emcip(request, django_redirect_url="entry_helper:reports_ignored")
