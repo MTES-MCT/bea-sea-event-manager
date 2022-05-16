@@ -17,7 +17,7 @@ class ReportListView(LoginRequiredMixin, ListView):
 class ReportTodoListView(ReportListView):
     queryset = Report.objects.filter(status="todo")
 
-    template_name: str = "entry_helper/report_todo.html"
+    template_name: str = "entry_helper/reports.html"
     extra_context={'title_content': "Rapports à traiter"}
 
     def post(self, request):
@@ -27,7 +27,7 @@ class ReportTodoListView(ReportListView):
 class ReportDoneListView(ReportListView):
     queryset = Report.objects.filter(status="done")
 
-    template_name: str = "entry_helper/report_todo.html"
+    template_name: str = "entry_helper/reports.html"
     extra_context={
         'title_content': "Rapports investigués",
         'report_list_status_type': "done",
@@ -37,7 +37,7 @@ class ReportDoneListView(ReportListView):
 class ReportIgnoredListView(ReportTodoListView):
     queryset = Report.objects.filter(status="ignored")
 
-    template_name: str = "entry_helper/report_todo.html"
+    template_name: str = "entry_helper/reports.html"
     extra_context={'title_content': "Rapports ignorés"}
 
     def post(self, request):
