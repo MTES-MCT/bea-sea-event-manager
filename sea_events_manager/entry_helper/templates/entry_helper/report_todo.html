@@ -14,6 +14,7 @@
         <div>
             <a href="{% url 'entry_helper:reports' %}" type="button">A investiguer</a>
             <a href="{% url 'entry_helper:reports_done' %}" type="button">Envoyés vers EMCIP</a>
+            <a href="{% url 'admin:logout' %}?next=/reports/" type="button">Déconnexion</a>
         </div>
         <div>
             {% for object in object_list %}
