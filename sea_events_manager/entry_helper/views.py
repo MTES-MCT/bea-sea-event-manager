@@ -29,6 +29,15 @@ class ReportDoneListView(ReportListView):
     template_name: str = "entry_helper/report_done.html"
 
 
+class ReportIgnoredListView(ReportTodoListView):
+    queryset = Report.objects.filter(status="ignored")
+
+    template_name: str = "entry_helper/report_todo.html"
+
+    def post(self, request):
+        _post_with_push_to_emcip(request, django_redirect_url="entry_helper:reports_ignored")
+
+
 def _post_with_push_to_emcip(request, django_redirect_url: str):
     if report_uuid := request.POST.get("report_uuid", None):
         report = Report.objects.get(uuid=report_uuid)
