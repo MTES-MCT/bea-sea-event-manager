@@ -49,6 +49,13 @@
                         <input type="submit" value="Ignorer">
                     </form>
                 {% endif %}
+                {% if report_list_status_type == 'ignored' %}
+                    <form action="{% url 'entry_helper:reports' %}" method="post">
+                        <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                        {% csrf_token %}
+                        <input type="submit" value="A investiguer">
+                    </form>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
