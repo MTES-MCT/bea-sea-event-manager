@@ -23,39 +23,46 @@
                 <div>
                     ---
                 </div>
-                <ul>
-                    <li>date évènement: 
-                        {{ object.event_datetime|date:"D d M Y" }} 
-                        at {{ object.event_datetime|time:"H:i" }}
-                    </li>
-                    <li>cross: {{ object.declarative_entity }}</li>
-                    <li>lieu de l'évènement: {{ object.event_location }}</li>
-                    <li>nom du navire: {{ object.ship_name }}</li>
-                    <li>IMO: {{ object.imo_number }}</li>
-                    <li>immatriculation du navire: {{ object.national_id }}</li>
-                    <li>type d'évènement: {{ object.event_type }}</li>
-                </ul>
-                {% if report_list_status_type != 'done' %}
-                    <form action="{% url 'entry_helper:reports' %}" method="post">
-                        <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
-                        {% csrf_token %}
-                        <input type="submit" value="Push to EMCIP">
-                    </form>
-                {% endif %}
-                {% if report_list_status_type == 'todo' %}
-                    <form action="{% url 'entry_helper:reports_ignored' %}" method="post">
-                        <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
-                        {% csrf_token %}
-                        <input type="submit" value="Ignorer">
-                    </form>
-                {% endif %}
-                {% if report_list_status_type == 'ignored' %}
-                    <form action="{% url 'entry_helper:reports' %}" method="post">
-                        <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
-                        {% csrf_token %}
-                        <input type="submit" value="A investiguer">
-                    </form>
-                {% endif %}
+                <div>
+                    {{ object.event_datetime|date:"D d M" }} / 
+                    {{ object.event_datetime|time:"H:i" }} / 
+                    {{ object.declarative_entity }} / 
+                    {{ object.event_datetime|date:"Y" }} / 
+                    Information manquante / 
+                    {{ object.event_location }} / 
+                    {{ object.ship_name }} - 
+                    {{ object.ship_type }} - 
+                    {{ object.imo_number }} - 
+                    {{ object.registration_number }} - 
+                    {{ object.ship_total_length }} - 
+                    {{ object.nb_deceased }} - 
+                    {{ object.nb_lost }} - 
+                    {{ object.nb_injured }} - 
+                    {{ object.event_type }}
+                </div>
+                <div>
+                    {% if report_list_status_type != 'done' %}
+                        <form action="{% url 'entry_helper:reports' %}" method="post">
+                            <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                            {% csrf_token %}
+                            <input type="submit" value="Push to EMCIP">
+                        </form>
+                    {% endif %}
+                    {% if report_list_status_type == 'todo' %}
+                        <form action="{% url 'entry_helper:reports_ignored' %}" method="post">
+                            <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                            {% csrf_token %}
+                            <input type="submit" value="Ignorer">
+                        </form>
+                    {% endif %}
+                    {% if report_list_status_type == 'ignored' %}
+                        <form action="{% url 'entry_helper:reports' %}" method="post">
+                            <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                            {% csrf_token %}
+                            <input type="submit" value="A investiguer">
+                        </form>
+                    {% endif %}
+                </div>
             {% endfor %}
         </div>
     </div>
