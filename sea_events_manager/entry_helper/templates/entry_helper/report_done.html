@@ -1,0 +1,37 @@
+{% load static dsfr_tags %}
+<!doctype html>
+<html lang="fr" {% if SITE_CONFIG.mourning %}data-fr-mourning{% endif %}>
+    
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+</head>
+
+<body>
+    <div>
+        <h1>Rapports SITREP</h1>
+        <div>
+            {% for object in object_list %}
+            <div>
+                <div>
+                    ---
+                </div>
+                <ul>
+                    <li>date évènement: 
+                        {{ object.event_datetime|date:"D d M Y" }} 
+                        at {{ object.event_datetime|time:"H:i" }}
+                    </li>
+                    <li>cross: {{ object.declarative_entity }}</li>
+                    <li>lieu de l'évènement: {{ object.event_location }}</li>
+                    <li>nom du navire: {{ object.ship_name }}</li>
+                    <li>IMO: {{ object.imo_number }}</li>
+                    <li>immatriculation du navire: {{ object.national_id }}</li>
+                    <li>type d'évènement: {{ object.event_type }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

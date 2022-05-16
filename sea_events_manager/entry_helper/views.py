@@ -37,3 +37,12 @@ class ReportTodoListView(ListView):
             switch_report_to_done(report)
 
         return redirect("entry_helper:reports")
+
+
+class ReportDoneListView(ListView):
+    model = Report
+    queryset = Report.objects.filter(status="done")
+
+    template_name: str = "entry_helper/report_done.html"
+
+    ordering = ["-event_datetime"]
