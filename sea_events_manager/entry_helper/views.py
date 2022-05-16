@@ -29,6 +29,7 @@ class ReportTodoListView(LoginRequiredMixin, ListView):
     queryset = Report.objects.filter(status="todo")
 
     template_name: str = "entry_helper/report_todo.html"
+    login_url = '/admin/login/'
 
     ordering = ["-event_datetime"]
 
@@ -45,5 +46,6 @@ class ReportDoneListView(LoginRequiredMixin, ListView):
     queryset = Report.objects.filter(status="done")
 
     template_name: str = "entry_helper/report_done.html"
+    login_url = '/admin/login/'
 
     ordering = ["-event_datetime"]
