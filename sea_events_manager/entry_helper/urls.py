@@ -6,5 +6,5 @@ app_name = "entry_helper"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("reports/", views.ReportListView.as_view(), name="reports"),
+    path("reports/", views.ReportTodoListView.as_view(), name="reports"),
 ]

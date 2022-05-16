@@ -23,7 +23,7 @@ from entry_helper.models import Report
 from entry_helper.internals import switch_report_to_done
 
 
-class ReportListView(ListView):
+class ReportTodoListView(ListView):
     model = Report
     queryset = Report.objects.filter(status="todo")
 
