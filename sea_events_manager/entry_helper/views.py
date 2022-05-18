@@ -24,7 +24,7 @@ class ReportTodoListView(ReportListView):
     }
 
     def post(self, request):
-        _post_with_push_to_emcip(request, "entry_helper:reports")
+        return _post_with_push_to_emcip(request, "entry_helper:reports")
 
 
 class ReportDoneListView(ReportListView):
@@ -47,7 +47,7 @@ class ReportIgnoredListView(ReportTodoListView):
     }
 
     def post(self, request):
-        _post_with_push_to_emcip(request, django_redirect_url="entry_helper:reports_ignored")
+        return _post_with_push_to_emcip(request, django_redirect_url="entry_helper:reports_ignored")
 
 
 def _post_with_push_to_emcip(request, django_redirect_url: str):
