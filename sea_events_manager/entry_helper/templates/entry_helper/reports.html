@@ -6,24 +6,29 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {% dsfr_css %}
+    {% dsfr_favicon %}
+    {% block extra_css %}{% endblock extra_css %}
 </head>
 
 <body>
-    <div>
-        <h1>{{ title_content }}</h1>
-        <div>
-            <a href="{% url 'entry_helper:reports' %}" type="button">A investiguer</a>
-            <a href="{% url 'entry_helper:reports_ignored' %}" type="button">Ignorés</a>
-            <a href="{% url 'entry_helper:reports_done' %}" type="button">Envoyés vers EMCIP</a>
-            <a href="{% url 'admin:logout' %}?next=/reports/" type="button">Déconnexion</a>
-        </div>
-        <div>
+    {% block skiplinks %}
+        {% dsfr_skiplinks skiplinks %}
+    {% endblock skiplinks %}
+    {% dsfr_theme_modale %}
+    
+    {% include "./header.html" %}
+    <div class="fr-container fr-mt-4w fr-mb-6w">
+         <h1>{{ title_content }}</h1>
+        <main id="content" role="main">
+            {% block content %}
             {% for object in object_list %}
             <div>
                 <div>
                     ---
                 </div>
                 <div>
+           
                     {{ object.event_datetime|date:"D d M" }} / 
                     {{ object.event_datetime|time:"H:i" }} / 
                     {{ object.declarative_entity }} / 
@@ -39,33 +44,39 @@
                     disparus : {{ object.nb_lost }} - 
                     blessés : {{ object.nb_injured }} - 
                     {{ object.event_type }}
+                    
                 </div>
                 <div>
                     {% if report_list_status_type != 'done' %}
                         <form action="{% url 'entry_helper:reports' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
                             {% csrf_token %}
-                            <input type="submit" value="Push to EMCIP">
+                            <input class="fr-btn" type="submit" value="Push to EMCIP">
                         </form>
                     {% endif %}
                     {% if report_list_status_type == 'todo' %}
                         <form action="{% url 'entry_helper:reports_ignored' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
                             {% csrf_token %}
-                            <input type="submit" value="Ignorer">
+                            <input class="fr-btn fr-btn--tertiary" type="submit" value="Ignorer">
                         </form>
                     {% endif %}
                     {% if report_list_status_type == 'ignored' %}
                         <form action="{% url 'entry_helper:reports' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
                             {% csrf_token %}
-                            <input type="submit" value="A investiguer">
+                            <input class="fr-btn fr-btn--secondary" type="submit" value="A investiguer">
                         </form>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
-    </div>
+        {% endblock content %}
+    </main>
+
+    {% include "./footer.html" %}
+    {% dsfr_js %}
+    {% block extra_js %}{% endblock extra_js %}
 </body>
 
 </html>
