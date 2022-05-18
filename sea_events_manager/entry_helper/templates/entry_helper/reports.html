@@ -47,23 +47,30 @@
                     
                 </div>
                 <div>
-                    {% if report_list_status_type != 'done' %}
+                    {% if report_list_status_type == 'todo' %}
                         <form action="{% url 'entry_helper:reports' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                            <input type="hidden" name="report_target_status" value="done" />
                             {% csrf_token %}
                             <input class="fr-btn" type="submit" value="Push to EMCIP">
                         </form>
-                    {% endif %}
-                    {% if report_list_status_type == 'todo' %}
-                        <form action="{% url 'entry_helper:reports_ignored' %}" method="post">
+                        <form action="{% url 'entry_helper:reports' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                            <input type="hidden" name="report_target_status" value="ignored" />
                             {% csrf_token %}
                             <input class="fr-btn fr-btn--tertiary" type="submit" value="Ignorer">
                         </form>
                     {% endif %}
                     {% if report_list_status_type == 'ignored' %}
-                        <form action="{% url 'entry_helper:reports' %}" method="post">
+                        <form action="{% url 'entry_helper:reports_ignored' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                            <input type="hidden" name="report_target_status" value="done" />
+                            {% csrf_token %}
+                            <input class="fr-btn" type="submit" value="Push to EMCIP">
+                        </form>
+                        <form action="{% url 'entry_helper:reports_ignored' %}" method="post">
+                            <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
+                            <input type="hidden" name="report_target_status" value="todo" />
                             {% csrf_token %}
                             <input class="fr-btn fr-btn--secondary" type="submit" value="A investiguer">
                         </form>
