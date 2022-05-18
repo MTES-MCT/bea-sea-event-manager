@@ -25,7 +25,7 @@ class ReportTodoListView(ReportListView):
         'report_list_status_type': "todo",
     }
     def get(self, request):
-        load_fake_bea_data_into_django()
+        task_load_fake_bea_data_into_django()
         return super().get(request)
 
     def post(self, request):
