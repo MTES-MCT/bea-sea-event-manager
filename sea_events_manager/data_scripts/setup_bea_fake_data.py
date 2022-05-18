@@ -28,7 +28,7 @@ def _extract_bea_data() -> pd.DataFrame:
     query = "SELECT * FROM seamis_report_with_ship_data"
 
     cwd = pathlib.Path(__file__).parent
-    with sqlite3.connect(f'{cwd}/demo_data/seamis_reports_with_ships_data.db.sqlite3') as conn:
+    with sqlite3.connect(f'{cwd}/demo_data/seamis_reports_with_ships_data.db.fake.sqlite3') as conn:
         df = pd.read_sql(query, conn)
 
     return df
