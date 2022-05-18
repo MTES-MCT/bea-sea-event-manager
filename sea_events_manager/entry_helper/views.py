@@ -6,6 +6,9 @@ from entry_helper.internals import switch_report_to_done
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
+from data_scripts.setup_bea_fake_data import load_fake_bea_data_into_django
+load_fake_bea_data_into_django()
+
 class ReportListView(LoginRequiredMixin, ListView):
     model = Report
 
