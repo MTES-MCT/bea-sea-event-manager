@@ -48,7 +48,7 @@ def _load_into_django(bea_data_formated_for_django: pd.DataFrame) -> None:
         report = Report(**bea_row)
         report.save()
 
-def load_fake_bea_data_into_django():
+def task_load_fake_bea_data_into_django():
     bea_data = _extract_bea_data()
     bea_data_formated_for_django = _transform(bea_data)
     _load_into_django(bea_data_formated_for_django)
