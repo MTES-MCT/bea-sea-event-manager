@@ -6,24 +6,47 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {% dsfr_css %}
+    {% dsfr_favicon %}
+    {% block extra_css %}{% endblock extra_css %}
 </head>
 
 <body>
-    <div>
-        <h1>{{ title_content }}</h1>
-        <div>
-            <a href="{% url 'entry_helper:reports' %}" type="button">A investiguer</a>
-            <a href="{% url 'entry_helper:reports_ignored' %}" type="button">Ignorés</a>
-            <a href="{% url 'entry_helper:reports_done' %}" type="button">Envoyés vers EMCIP</a>
-            <a href="{% url 'admin:logout' %}?next=/reports/" type="button">Déconnexion</a>
-        </div>
-        <div>
+    {% block skiplinks %}
+        {% dsfr_skiplinks skiplinks %}
+    {% endblock skiplinks %}
+    {% dsfr_theme_modale %}
+    {% include "./header.html" %}
+ 
+    <div class="fr-container">
+    
+    <nav class="fr-nav " id="header-navigation" role="navigation" aria-label="Menu principal">
+        <ul class="fr-nav__list">
+            <li class="fr-nav__item">
+                <a class="fr-nav__link" href="{% url 'entry_helper:reports' %}" type="button">A investiguer</a>
+            </li>
+            <li class="fr-nav__item">
+                <a class="fr-nav__link" href="{% url 'entry_helper:reports_ignored' %}" type="button">Ignorés</a>
+                </li>
+                <li class="fr-nav__item">
+                    <a class="fr-nav__link"  href="{% url 'entry_helper:reports_done' %}" type="button">Envoyés vers EMCIP</a>
+                </li>
+                <li class="fr-nav__item">
+                    <a class="fr-nav__link" s href="{% url 'admin:logout' %}?next=/reports/" type="button">Déconnexion</a>
+                </li>
+            </ul>
+        </nav>
+         <h1>{{ title_content }}</h1>
+
+        <main id="content fr-mt-4w fr-mb-6w" role="main">
+            {% block content %}
             {% for object in object_list %}
             <div>
                 <div>
                     ---
                 </div>
                 <div>
+           
                     {{ object.event_datetime|date:"D d M" }} / 
                     {{ object.event_datetime|time:"H:i" }} / 
                     {{ object.declarative_entity }} / 
@@ -39,6 +62,7 @@
                     disparus : {{ object.nb_lost }} - 
                     blessés : {{ object.nb_injured }} - 
                     {{ object.event_type }}
+                    
                 </div>
                 <div>
                     {% if report_list_status_type != 'done' %}
@@ -65,7 +89,12 @@
                 </div>
             {% endfor %}
         </div>
-    </div>
+        {% endblock content %}
+    </main>
+
+    {% include "./footer.html" %}
+    {% dsfr_js %}
+    {% block extra_js %}{% endblock extra_js %}
 </body>
 
 </html>
