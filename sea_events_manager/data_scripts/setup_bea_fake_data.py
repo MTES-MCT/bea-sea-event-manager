@@ -30,15 +30,11 @@ def _extract_bea_data() -> pd.DataFrame:
     cwd = pathlib.Path(__file__).parent
     with sqlite3.connect(f'{cwd}/demo_data/seamis_reports_with_ships_data.db.sqlite3') as conn:
         df = pd.read_sql(query, conn)
-        print(df)
 
     return df
 
 
 def _transform(bea_data: pd.DataFrame) -> pd.DataFrame:
-    print(bea_data.columns)
-    print("keys", list(_columns_mapping_to_django.keys()))
-    print(bea_data[["ship_name", "ship_type"]])
     bea_data_to_keep = bea_data[list(_columns_mapping_to_django.keys())]
     return bea_data_to_keep.rename(columns=_columns_mapping_to_django)
 
