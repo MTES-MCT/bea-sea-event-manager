@@ -1,0 +1,84 @@
+{% load static dsfr_tags %}
+<header role="banner" class="fr-header">
+  <div class="fr-header__body">
+    <div class="fr-container">
+      <div class="fr-header__body-row">
+        <div class="fr-header__brand fr-enlarge-link">
+          <div class="fr-header__brand-top">
+            <div class="fr-header__logo">
+              <p class="fr-logo">
+                MINISTÈRE
+                <br />DE LA TRANSITION<br />
+                ECOLOGIQUE
+              </p>
+            </div>
+          </div>
+          <div class="fr-header__service">
+            <a href="/" title="Accueil - [À MODIFIER | Nom du site / service]">
+              <p class="fr-header__service-title">
+                BEAmer
+                <span class="fr-badge fr-badge--sm fr-badge--green-emeraude"
+                  >BETA</span
+                >
+              </p>
+            </a>
+            <p class="fr-header__service-tagline">
+              Le Bureau d’enquêtes sur les événements de mer
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="fr-header"
+    id="fr-menu-mobile"
+    data-fr-js-modal="true"
+    data-fr-js-header-modal="true"
+  >
+    <div class="fr-container">
+      <nav
+        class="fr-nav"
+        id="header-navigation"
+        role="navigation"
+        aria-label="Menu principal"
+      >
+        <ul class="fr-nav__list">
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="{% url 'entry_helper:reports' %}"
+              type="button"
+              >A investiguer</a
+            >
+          </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="{% url 'entry_helper:reports_ignored' %}"
+              type="button"
+              >Ignorés</a
+            >
+          </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              href="{% url 'entry_helper:reports_done' %}"
+              type="button"
+              >Envoyés vers EMCIP</a
+            >
+          </li>
+          <li class="fr-nav__item">
+            <a
+              class="fr-nav__link"
+              s
+              href="{% url 'admin:logout' %}?next=/reports/"
+              type="button"
+              >Déconnexion</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
