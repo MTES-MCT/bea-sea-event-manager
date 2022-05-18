@@ -1,9 +1,11 @@
 from django.shortcuts import redirect
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from entry_helper.models import Report
 from entry_helper.internals import switch_report_to_done
-from django.contrib.auth.mixins import LoginRequiredMixin
+
+from data_scripts.setup_bea_fake_data import task_load_fake_bea_data_into_django
 
 
 class ReportListView(LoginRequiredMixin, ListView):
@@ -22,6 +24,9 @@ class ReportTodoListView(ReportListView):
         'title_content': "Rapports à traiter",
         'report_list_status_type': "todo",
     }
+    def get(self, request):
+        task_load_fake_bea_data_into_django()
+        return super().get(request)
 
     def post(self, request):
         _post_with_push_to_emcip(request, "entry_helper:reports")
