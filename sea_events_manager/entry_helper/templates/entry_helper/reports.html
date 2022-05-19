@@ -24,29 +24,28 @@
             {% block content %}
             {% for object in object_list %}
             <div>
-                <div>
-                    ---
-                </div>
-                <div>
+                <div class="fr-mt-2w">
            
-                    {{ object.event_datetime|date:"D d M" }} / 
+                    {{ object.event_datetime|date:"d M" }} / 
                     {{ object.event_datetime|time:"H:i" }} / 
-                    {{ object.declarative_entity }} / 
-                    {{ object.event_datetime|date:"Y" }} / 
-                    Information manquante / 
+                    <strong>
+                    {{ object.declarative_entity }}  </strong>  / 
+                    <strong>{{ object.event_datetime|date:"Y" }}</strong>   / 
+                    <strong> Information manquante  
+                    </strong> /
                     {{ object.event_location }} / 
                     {{ object.ship_name }} - 
                     {{ object.ship_type }} - 
-                    IMO : {{ object.imo_number }} - 
-                    Immat : {{ object.registration_number }} - 
-                    lht : {{ object.ship_total_length }} - 
-                    décés : {{ object.nb_deceased }} - 
-                    disparus : {{ object.nb_lost }} - 
-                    blessés : {{ object.nb_injured }} - 
+                    <u>IMO</u>: {{ object.imo_number }} - 
+                   <u>Immat</u>:  {{ object.registration_number }} - 
+                   <u>lht</u>:  {{ object.ship_total_length }} - 
+                   <u>décès</u>:  {{ object.nb_deceased }} - 
+                   <u>disparus</u>:  {{ object.nb_lost }} - 
+                    <u>blessés</u>:   {{ object.nb_injured }} - 
                     {{ object.event_type }}
                     
                 </div>
-                <div>
+                <div class="fr-btns-group fr-btns-group--inline fr-mt-2w">
                     {% if report_list_status_type == 'todo' %}
                         <form action="{% url 'entry_helper:reports' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
