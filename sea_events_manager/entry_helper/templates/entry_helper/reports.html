@@ -46,7 +46,7 @@
                     {{ object.event_type }}
                     
                 </div>
-                <div>
+                <div class="fr-btns-group fr-btns-group--inline fr-mt-2w">
                     {% if report_list_status_type == 'todo' %}
                         <form action="{% url 'entry_helper:reports' %}" method="post">
                             <input type="hidden" name="report_uuid" value="{{ object.uuid }}" />
