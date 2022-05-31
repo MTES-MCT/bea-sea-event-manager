@@ -13,9 +13,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 
+from environs import Env
+
+env = Env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env.read_env(f"{BASE_DIR}/.env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -26,11 +31,7 @@ SECRET_KEY = '6@m1u!2wf_aw#bg0f3-6$4%-nlf-7qa*&o8=38mv79d3l*qi-x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'host.docker.internal',
-    'localhost',
-]
-
+ALLOWED_HOSTS = env.list('SEA_EVENT_MANAGER_ALLOWED_HOSTS')
 
 # Application definition
 

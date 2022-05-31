@@ -8,6 +8,7 @@ authors = ["Philippe GALVAN <git.philippeG@outlook.com>"]
 python = "^3.10"
 django-dsfr = "^0.7.3"
 pandas = "^1.4.2"
+environs = "^9.5.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
