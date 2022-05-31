@@ -28,3 +28,17 @@ poetry run python3 sea_events_manager/manage.py runserver
 
 # Reverse-proxy
 If a reverse-proxy is desired, a functionnal dockerized setup is available in `.nginx` folder.
+
+# Deploy with docker
+## Requirements:
+- `Docker`
+
+## If build is needed:
+```bash
+docker build . -t sea_events_manager
+```
+
+## Run the app:
+```bash
+docker run -d -p 8000:8000 sea_events_manager
+```
