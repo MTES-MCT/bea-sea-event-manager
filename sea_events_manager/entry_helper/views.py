@@ -17,7 +17,7 @@ class ReportListView(LoginRequiredMixin, ListView):
 
     ordering = ["-event_datetime"]
 
-    login_url = '/admin/login/'
+    login_url = 'admin:login'
 
 
 class ReportTodoListView(ReportListView):
