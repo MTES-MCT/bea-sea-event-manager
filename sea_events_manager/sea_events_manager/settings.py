@@ -26,12 +26,19 @@ env.read_env(f"{BASE_DIR}/.env")
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6@m1u!2wf_aw#bg0f3-6$4%-nlf-7qa*&o8=38mv79d3l*qi-x'
+SECRET_KEY = env.str("SEA_EVENT_MANAGER_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("SEA_EVENT_MANAGER_DEBUG", False)
 
 ALLOWED_HOSTS = env.list('SEA_EVENT_MANAGER_ALLOWED_HOSTS')
+print(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
+
+# If SCRIPT_NAME is not empty, it will be prepended to the URL.
+# Required if using proxy_set_header SCRIPT_NAME /bea;
+FORCE_SCRIPT_NAME = env.str("SEA_EVENT_MANAGER_FORCE_SCRIPT_NAME", None)
+if FORCE_SCRIPT_NAME:
+    USE_X_FORWARDED_HOST = True
 
 # Application definition
 
@@ -125,6 +132,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 	
 STATIC_URL = '/static/'
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/"),
+    os.path.join(BASE_DIR, "staticfiles"),
 )

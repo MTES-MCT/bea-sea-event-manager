@@ -72,7 +72,7 @@
             <a
               class="fr-nav__link"
               s
-              href="{% url 'admin:logout' %}?next=/reports/"
+              href="{% url 'admin:logout' %}?next={% url 'entry_helper:reports' %}"
               type="button"
               >Déconnexion</a
             >

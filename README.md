@@ -2,43 +2,36 @@
 
 Entry assistance tool for BEAMer investigators to the EMCIP database.
 
+# Deploying the app
+## Requirements
+`Docker`
 
-# Requirements:
-- `Python 3.10+`
-- `poetry`
 
-# Installation
-1) In the root folder install with poetry
-
-```bash
-poetry install
-```
-
-2) Configure the app with `.env` config file
+## Configuration
+Configure the app with `.env` config file
 => To create a default `.env` config file:
 ```bash
-echo 'SEA_EVENT_MANAGER_ALLOWED_HOSTS = "127.0.0.1,localhost,host.docker.internal"' > .env
+echo 'SEA_EVENT_MANAGER_ALLOWED_HOSTS="127.0.0.1,localhost,host.docker.internal"
+SEA_EVENT_MANAGER_DEBUG=False
+SEA_EVENT_MANAGER_SECRET_KEY=
+SEA_EVENT_MANAGER_FORCE_SCRIPT_NAME='> .env
 ```
 
-3) Run the app (default to port 8000):
+
+## If build is needed:
+```bash
+docker build . -t <project_docker_hub_id>/sea_events_manager
+```
+
+## Run the app:
+Generate a valid `.env` file and provide it to the container with -v option.
+
+Static files are exposed through a volume mounted in the container.
 
 ```bash
-poetry run python3 sea_events_manager/manage.py runserver
+docker run -d --rm -p 8000:8000 -v /var/django_app/static/:/code/static/ --env-file=.env --name=django_app <project_docker_hub_id>/sea_events_manager
+docker exec django_app poetry run python /code/manage.py collectstatic --noinput
 ```
 
 # Reverse-proxy
 If a reverse-proxy is desired, a functionnal dockerized setup is available in `.nginx` folder.
-
-# Deploy with docker
-## Requirements:
-- `Docker`
-
-## If build is needed:
-```bash
-docker build . -t sea_events_manager
-```
-
-## Run the app:
-```bash
-docker run -d -p 8000:8000 sea_events_manager
-```
