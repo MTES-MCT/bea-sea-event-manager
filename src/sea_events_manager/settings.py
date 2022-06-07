@@ -137,7 +137,12 @@ STATICFILES_DIRS = (
 )
 
 if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static_root', 'static')
+    _default_static_root = os.path.join(BASE_DIR, "static_root")
+    STATIC_ROOT = os.path.join(
+        # Do not add "/static" in the env variable
+        env.str("SEA_EVENT_MANAGER_STATIC_ROOT", _default_static_root),
+        "static/",
+    )
 
 
 # CUSTOM SETTINGS
