@@ -13,12 +13,12 @@ OCCURRENCE_ENDPOINT = "occurrence"
 
 @dataclass
 class EmcipAttribute:
-    node_breadcrump: list
+    nodes_breadcrumb: list
     code: str
 
 attribute_mapping_config = {
     "occurrence_date": EmcipAttribute(
-        node_breadcrump = ["TE-28"],
+        nodes_breadcrumb = ["TE-28"],
         code = "TA-346",
     )
 }
@@ -71,7 +71,7 @@ class EmcipQueryBodyBuilder:
 
     def _add_attribute_to_body(self, attribute_name: str, attribute_value: str) -> dict:
             emcip_attribute = self.attribute_mapping[attribute_name]
-            self._add_missing_nodes(emcip_attribute.node_breadcrump)
+            self._add_missing_nodes(emcip_attribute.nodes_breadcrumb)
             self._add_attribute(emcip_attribute, attribute_value)
 
     def _add_missing_nodes(self, nodes: list) -> None:
@@ -94,7 +94,7 @@ class EmcipQueryBodyBuilder:
         return parent_node_uuid
 
     def _get_parent_node_uuid(self, attribute: EmcipAttribute) -> str:
-        return self.existing_nodes[attribute.node_breadcrump[-1]]
+        return self.existing_nodes[attribute.nodes_breadcrumb[-1]]
 
     def _add_attribute(self, attribute: EmcipAttribute, value: str) -> None:
         self.body["attributes"].append(

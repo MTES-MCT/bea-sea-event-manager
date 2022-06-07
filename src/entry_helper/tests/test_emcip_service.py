@@ -19,7 +19,7 @@ class TestQueryBodyBuilder(TestCase):
         }
         test_attribute_mapping = {
             "occurrence_date": EmcipAttribute(
-                node_breadcrump = ["TE-28"],
+                nodes_breadcrumb = ["TE-28"],
                 code = "TA-346",
             )
         }
@@ -53,7 +53,7 @@ class TestQueryBodyBuilder(TestCase):
         }
         test_attribute_mapping = {
             "occurrence_date": EmcipAttribute(
-                node_breadcrump = ["TE-28", "TE-24"],
+                nodes_breadcrumb = ["TE-28", "TE-24"],
                 code = "TA-346",
             )
         }
@@ -93,11 +93,11 @@ class TestQueryBodyBuilder(TestCase):
         }
         test_attribute_mapping = {
             "occurrence_date": EmcipAttribute(
-                node_breadcrump = ["TE-28", "TE-24"],
+                nodes_breadcrumb = ["TE-28", "TE-24"],
                 code = "TA-346",
             ),
             "occurrence_location": EmcipAttribute(
-                node_breadcrump = ["TE-28", "TE-24", "TE-25"],
+                nodes_breadcrumb = ["TE-28", "TE-24", "TE-25"],
                 code = "TA-347",
             ),
         }
