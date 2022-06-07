@@ -6,17 +6,17 @@ Entry assistance tool for BEAMer investigators to the EMCIP database.
 ## Requirements
 `Docker`
 
-
 ## Configuration
 Configure the app with `.env` config file
 => To create a default `.env` config file:
 ```bash
 echo 'SEA_EVENT_MANAGER_ALLOWED_HOSTS="127.0.0.1,localhost,host.docker.internal"
 SEA_EVENT_MANAGER_DEBUG=False
+SEA_EVENT_MANAGER_EMCIP_URL=https://apimgr-pp.emsa.europa.eu/services/emcip/v1
+SEA_EVENT_MANAGER_BASIC_AUTHORIZATION_TOKEN=
 SEA_EVENT_MANAGER_SECRET_KEY=
 SEA_EVENT_MANAGER_FORCE_SCRIPT_NAME='> .env
 ```
-
 
 ## If build is needed:
 ```bash
