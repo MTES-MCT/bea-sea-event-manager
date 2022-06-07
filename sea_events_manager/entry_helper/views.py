@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from entry_helper.models import Report
-from entry_helper.internals import (
+from entry_helper.core import (
     switch_report_to_done,
     switch_report_to_ignored,
     switch_report_to_todo,
