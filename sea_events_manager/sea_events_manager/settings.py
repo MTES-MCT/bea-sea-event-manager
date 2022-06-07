@@ -138,3 +138,13 @@ if not DEBUG:
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "staticfiles"),
 )
+
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# CUSTOM SETTINGS
+
+EMCIP_URL = env.str("SEA_EVENT_MANAGER_EMCIP_URL")
+# The token of authorization without the "Basic " prefix !
+BASIC_AUTHORIZATION_TOKEN = env.str("SEA_EVENT_MANAGER_BASIC_AUTHORIZATION_TOKEN")
