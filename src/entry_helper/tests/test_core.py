@@ -4,13 +4,18 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from entry_helper.models import Report
-from entry_helper.core import switch_report_to_done
+from entry_helper.core import (
+    switch_report_to_done,
+    switch_report_to_ignored,
+    switch_report_to_todo,
+)
 
 class TestTests(TestCase):
     def test_tests_are_working(self):
         assert True
 
 
+@patch("entry_helper.core.BEAToEmcipService")
 class TestSitrepHandling(TestCase):
     def setUp(self) -> None:
         self.report = Report(
@@ -34,7 +39,6 @@ class TestSitrepHandling(TestCase):
     def tearDown(self) -> None:
         Report.objects.all().delete()
 
-    @patch("entry_helper.core.BEAToEmcipService.push_report_to_emcip")
     def test_sitrep_switch_from_todo_to_done(self, mock_push_service):
         self.assertEqual(self.report.status, "todo")
 
@@ -45,4 +49,75 @@ class TestSitrepHandling(TestCase):
         self.assertEqual(updated_report.uuid, self.report.uuid)
         self.assertEqual(updated_report.status, "done")
 
-        mock_push_service.assert_called_with(updated_report)
+        mock_push_service().push_report_to_emcip.assert_called_with(updated_report)
+
+    def test_sitrep_switch_from_todo_to_ignored(self, mock_push_service):
+        self.assertEqual(self.report.status, "todo")
+
+        switch_report_to_ignored(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+
+        self.assertEqual(updated_report.uuid, self.report.uuid)
+        self.assertEqual(updated_report.status, "ignored")
+
+        mock_push_service().push_report_to_emcip.assert_not_called()
+
+    def test_sitrep_switch_from_ignored_to_todo(self, mock_push_service):
+        self.report.status = "ignored"
+        self.report.save()
+
+        switch_report_to_todo(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+
+        self.assertEqual(updated_report.uuid, self.report.uuid)
+        self.assertEqual(updated_report.status, "todo")
+
+        mock_push_service().push_report_to_emcip.assert_not_called()
+
+    def test_sitrep_switch_from_ignored_to_done(self, mock_push_service):
+        self.report.status = "ignored"
+        self.report.save()
+
+        switch_report_to_done(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+
+        self.assertEqual(updated_report.uuid, self.report.uuid)
+        self.assertEqual(updated_report.status, "done")
+
+        mock_push_service().push_report_to_emcip.assert_called_with(updated_report)
+
+    def test_sitrep_cannot_switch_from_done_to_done(self, mock_push_service):
+        self.report.status = "done"
+        self.report.save()
+
+        with self.assertRaises(Exception):
+            switch_report_to_done(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+        self.assertEqual(updated_report.status, "done")
+        mock_push_service().push_report_to_emcip.assert_not_called()
+
+    def test_sitrep_cannot_switch_from_done_to_todo(self, mock_push_service):
+        self.report.status = "done"
+        self.report.save()
+
+        with self.assertRaises(Exception):
+            switch_report_to_todo(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+        self.assertEqual(updated_report.status, "done")
+        mock_push_service().push_report_to_emcip.assert_not_called()
+
+    def test_sitrep_cannot_switch_from_done_to_ignored(self, mock_push_service):
+        self.report.status = "done"
+        self.report.save()
+
+        with self.assertRaises(Exception):
+            switch_report_to_ignored(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+        self.assertEqual(updated_report.status, "done")
+        mock_push_service().push_report_to_emcip.assert_not_called()
