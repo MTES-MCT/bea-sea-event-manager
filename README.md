@@ -29,7 +29,7 @@ Generate a valid `.env` file and provide it to the container with -v option.
 Static files are exposed through a volume mounted in the container.
 
 ```bash
-docker run -d --rm -p 8000:8000 -v /var/django_app/static/:/code/static/ --env-file=.env --name=django_app <project_docker_hub_id>/sea_events_manager
+docker run -d --rm -p 8000:8000 -v /var/django_app/static/:/code/static_root/static/ --env-file=.env --name=django_app <project_docker_hub_id>/sea_events_manager
 docker exec django_app poetry run python /code/manage.py collectstatic --noinput
 ```
 
