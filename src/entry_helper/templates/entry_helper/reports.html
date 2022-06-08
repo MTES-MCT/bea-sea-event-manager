@@ -20,6 +20,20 @@
     {% include "./header.html" %}
     <div class="fr-container fr-mt-4w fr-mb-6w">
          <h1>{{ title_content }}</h1>
+         <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="fr-mb-2w">
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <div class="fr-alert fr-alert--error">
+                            <p>{{ message }}</p>
+                            <p>If the error persists, please contact the administrator.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+         </div>
         <main id="content" role="main">
             {% block content %}
             {% for object in object_list %}

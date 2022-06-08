@@ -10,6 +10,7 @@ from entry_helper.core import (
     switch_report_to_ignored,
     switch_report_to_todo,
 )
+from entry_helper.exceptions import FailedPushToEmcip
 
 class TestTests(TestCase):
     def test_tests_are_working(self):
@@ -122,3 +123,37 @@ class TestSitrepHandling(TestCase):
         updated_report = Report.objects.get(uuid=self.report.uuid)
         self.assertEqual(updated_report.status, "done")
         mock_push_service().push_report_to_emcip.assert_not_called()
+
+    def test_todo_sitrep_failed_to_be_pushed_to_emcip(self, mock_push_service):
+        self.report.status = "todo"
+        self.report.save()
+
+        mock_push_service().push_report_to_emcip.side_effect = FailedPushToEmcip(
+            status_code=403, reason="test_reason"
+        )
+
+        with self.assertRaises(FailedPushToEmcip) as e:
+            switch_report_to_done(self.report)
+            self.assertEqual(e.status_code, 403)
+            self.assertEqual(e.reason, "test_reason")
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+        self.assertEqual(updated_report.status, "todo")
+        mock_push_service().push_report_to_emcip.assert_called_with(updated_report)
+
+    def test_ignored_sitrep_failed_to_be_pushed_to_emcip(self, mock_push_service):
+        self.report.status = "ignored"
+        self.report.save()
+
+        mock_push_service().push_report_to_emcip.side_effect = FailedPushToEmcip(
+            status_code=403, reason="test_reason"
+        )
+
+        with self.assertRaises(FailedPushToEmcip) as e:
+            switch_report_to_done(self.report)
+            self.assertEqual(e.status_code, 403)
+            self.assertEqual(e.reason, "test_reason")
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+        self.assertEqual(updated_report.status, "ignored")
+        mock_push_service().push_report_to_emcip.assert_called_with(updated_report)
