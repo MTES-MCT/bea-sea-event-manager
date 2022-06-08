@@ -35,7 +35,6 @@ class BEAToEmcipService:
 
     def push_report_to_emcip(self, report: Report) -> None:
         occurrence = self._format_report_values_for_emcip(report)
-        print("occurrence", occurrence)
         self._post_occurrence(occurrence, self.shared_headers)
 
     def _format_report_values_for_emcip(self, report: Report) -> dict:

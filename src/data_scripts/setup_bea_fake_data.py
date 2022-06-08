@@ -42,7 +42,6 @@ def _transform(bea_data: pd.DataFrame) -> pd.DataFrame:
 def _load_into_django(bea_data_formated_for_django: pd.DataFrame) -> None:
     for bea_row in bea_data_formated_for_django.to_dict(orient='records'):
         if Report.objects.filter(report_number=bea_row['report_number']):
-            print("Report already exists")
             continue
 
         report = Report(**bea_row)
