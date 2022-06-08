@@ -7,6 +7,7 @@ import requests
 from django.conf import settings
 
 from entry_helper.models import Report
+from entry_helper.exceptions import FailedPushToEmcip
 
 OCCURRENCE_ENDPOINT = "occurrence"
 
@@ -49,7 +50,7 @@ class BEAToEmcipService:
     def _post_occurrence(self, body: dict, headers: dict) -> None:
         response = requests.post(self.occurrence_endpoint_url, json=body, headers=headers)
         if response.status_code != 200:
-            raise Exception(f"Push to emcip failed with status_code: {response.status_code}")
+            raise FailedPushToEmcip(response.status_code, response.reason)
 
 
 class EmcipQueryBodyBuilder:

@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from entry_helper.models import Report
 from entry_helper.core import (
@@ -8,6 +9,7 @@ from entry_helper.core import (
     switch_report_to_ignored,
     switch_report_to_todo,
 )
+from entry_helper.exceptions import FailedPushToEmcip
 
 from data_scripts.setup_bea_fake_data import task_load_fake_bea_data_into_django
 
@@ -36,12 +38,12 @@ class ReportTodoListView(ReportListView):
         current_view = "entry_helper:reports"
         match report_target_status := request.POST.get("report_target_status", None):
             case "done":
-                return _post_with_push_to_emcip(request, current_view)
+                _post_with_push_to_emcip(request, current_view)
             case "ignored":
-                return _post_with_ignored(request, current_view)
+                _post_with_ignored(request, current_view)
             case _:
                 raise Exception(f"Unknown target status {report_target_status}")
-
+        return redirect(current_view)
 
 class ReportDoneListView(ReportListView):
     queryset = Report.objects.filter(status="done")
@@ -66,32 +68,39 @@ class ReportIgnoredListView(ReportTodoListView):
         current_view = "entry_helper:reports_ignored"
         match report_target_status := request.POST.get("report_target_status", None):
             case "done":
-                return _post_with_push_to_emcip(request, current_view)
+                _post_with_push_to_emcip(request, current_view)
             case "todo":
-                return _post_with_todo(request, current_view)
+                _post_with_todo(request, current_view)
             case _:
                 raise Exception(f"Unknown target status {report_target_status}")
+        return redirect(current_view)
 
 
-def _post_with_push_to_emcip(request, django_redirect_url: str):
+def handle_failed_push_to_emcip(func):
+    def query_trying_to_push(request, *args, **kwargs):
+        try:
+            func(request, *args, **kwargs)
+        except FailedPushToEmcip as e:
+            messages.error(request, e)
+    return query_trying_to_push
+
+
+@handle_failed_push_to_emcip
+def _post_with_push_to_emcip(request, django_redirect_url: str) -> None:
     if report_uuid := request.POST.get("report_uuid", None):
         report = Report.objects.get(uuid=report_uuid)
         switch_report_to_done(report)
 
-    return redirect(django_redirect_url)
 
-
-def _post_with_ignored(request, django_redirect_url: str):
+@handle_failed_push_to_emcip
+def _post_with_ignored(request, django_redirect_url: str) -> None:
     if report_uuid := request.POST.get("report_uuid", None):
         report = Report.objects.get(uuid=report_uuid)
         switch_report_to_ignored(report)
 
-    return redirect(django_redirect_url)
 
-
-def _post_with_todo(request, django_redirect_url: str):
+@handle_failed_push_to_emcip
+def _post_with_todo(request, django_redirect_url: str) -> None:
     if report_uuid := request.POST.get("report_uuid", None):
         report = Report.objects.get(uuid=report_uuid)
         switch_report_to_todo(report)
-
-    return redirect(django_redirect_url)
