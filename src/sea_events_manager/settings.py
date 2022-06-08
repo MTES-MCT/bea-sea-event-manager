@@ -32,7 +32,6 @@ SECRET_KEY = env.str("SEA_EVENT_MANAGER_SECRET_KEY")
 DEBUG = env.bool("SEA_EVENT_MANAGER_DEBUG", False)
 
 ALLOWED_HOSTS = env.list('SEA_EVENT_MANAGER_ALLOWED_HOSTS')
-print(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
 
 # If SCRIPT_NAME is not empty, it will be prepended to the URL.
 # Required if using proxy_set_header SCRIPT_NAME /bea;
