@@ -19,17 +19,18 @@ class ReportListView(LoginRequiredMixin, ListView):
 
     ordering = ["-event_datetime"]
 
-    login_url = 'admin:login'
+    login_url = "admin:login"
 
 
 class ReportTodoListView(ReportListView):
     queryset = Report.objects.filter(status="todo")
 
     template_name: str = "entry_helper/reports.html"
-    extra_context={
-        'title_content': "Rapports à traiter",
-        'report_list_status_type': "todo",
+    extra_context = {
+        "title_content": "Rapports à traiter",
+        "report_list_status_type": "todo",
     }
+
     def get(self, request):
         task_load_fake_bea_data_into_django()
         return super().get(request)
@@ -45,13 +46,14 @@ class ReportTodoListView(ReportListView):
                 raise Exception(f"Unknown target status {report_target_status}")
         return redirect(current_view)
 
+
 class ReportDoneListView(ReportListView):
     queryset = Report.objects.filter(status="done")
 
     template_name: str = "entry_helper/reports.html"
-    extra_context={
-        'title_content': "Rapports investigués",
-        'report_list_status_type': "done",
+    extra_context = {
+        "title_content": "Rapports investigués",
+        "report_list_status_type": "done",
     }
 
 
@@ -59,9 +61,9 @@ class ReportIgnoredListView(ReportTodoListView):
     queryset = Report.objects.filter(status="ignored")
 
     template_name: str = "entry_helper/reports.html"
-    extra_context={
-        'title_content': "Rapports ignorés",
-        'report_list_status_type': "ignored",
+    extra_context = {
+        "title_content": "Rapports ignorés",
+        "report_list_status_type": "ignored",
     }
 
     def post(self, request):
@@ -81,7 +83,9 @@ def handle_failed_push_to_emcip(func):
         try:
             func(request, *args, **kwargs)
         except FailedPushToEmcip as e:
+            print(e)
             messages.error(request, e)
+
     return query_trying_to_push
 
 
