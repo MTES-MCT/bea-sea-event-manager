@@ -6,41 +6,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('entry_helper', '0004_report_status'),
+        ("entry_helper", "0004_report_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='report',
-            name='nb_deceased',
+            model_name="report",
+            name="nb_deceased",
             field=models.IntegerField(default=0),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='report',
-            name='nb_injured',
+            model_name="report",
+            name="nb_injured",
             field=models.IntegerField(default=0),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='report',
-            name='nb_lost',
+            model_name="report",
+            name="nb_lost",
             field=models.IntegerField(default=0),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='report',
-            name='ship_total_length',
+            model_name="report",
+            name="ship_total_length",
             field=models.FloatField(null=True),
         ),
         migrations.AddField(
-            model_name='report',
-            name='ship_type',
+            model_name="report",
+            name="ship_type",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='report',
-            name='ship_name',
+            model_name="report",
+            name="ship_name",
             field=models.TextField(null=True),
         ),
     ]
