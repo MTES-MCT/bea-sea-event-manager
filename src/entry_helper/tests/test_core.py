@@ -12,6 +12,7 @@ from entry_helper.core import (
 )
 from entry_helper.exceptions import FailedPushToEmcip
 
+
 class TestTests(TestCase):
     def test_tests_are_working(self):
         assert True
@@ -37,7 +38,7 @@ class TestSitrepHandling(TestCase):
             status="todo",
         )
         self.report.save()
-    
+
     def tearDown(self) -> None:
         Report.objects.all().delete()
 
@@ -122,6 +123,26 @@ class TestSitrepHandling(TestCase):
 
         updated_report = Report.objects.get(uuid=self.report.uuid)
         self.assertEqual(updated_report.status, "done")
+        mock_push_service().push_report_to_emcip.assert_not_called()
+
+    def test_switch_ignored_to_ignored_do_not_push(self, mock_push_service):
+        self.report.status = "ignored"
+        self.report.save()
+
+        switch_report_to_ignored(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+        self.assertEqual(updated_report.status, "ignored")
+        mock_push_service().push_report_to_emcip.assert_not_called()
+
+    def test_switch_todo_to_todo_do_not_push(self, mock_push_service):
+        self.report.status = "todo"
+        self.report.save()
+
+        switch_report_to_todo(self.report)
+
+        updated_report = Report.objects.get(uuid=self.report.uuid)
+        self.assertEqual(updated_report.status, "todo")
         mock_push_service().push_report_to_emcip.assert_not_called()
 
     def test_todo_sitrep_failed_to_be_pushed_to_emcip(self, mock_push_service):
