@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 
 from environs import Env
+from sqlalchemy.engine import create_engine
 
 env = Env()
 
@@ -147,3 +148,11 @@ if not DEBUG:
 EMCIP_URL = env.str("SEA_EVENT_MANAGER_EMCIP_URL")
 # The token of authorization without the "Basic " prefix !
 BASIC_AUTHORIZATION_TOKEN = env.str("SEA_EVENT_MANAGER_BASIC_AUTHORIZATION_TOKEN")
+
+username = env.str("RAW_REPORTS_DB_USERNAME")
+password = env.str("RAW_REPORTS_DB_PASSWORD")
+host = env.str("RAW_REPORTS_DB_HOST")
+port = env.int("RAW_REPORTS_DB_PORT")
+database = env.str("RAW_REPORTS_DB_DATABASE")
+
+RAW_REPORTS_ENGINE = create_engine(f"postgresql://{username}:{password}@{host}:{port}/{database}")

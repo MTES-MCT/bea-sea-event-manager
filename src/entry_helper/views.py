@@ -2,6 +2,7 @@ from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.conf import settings
 
 from entry_helper.models import Report
 from entry_helper.core import (
@@ -11,7 +12,9 @@ from entry_helper.core import (
 )
 from entry_helper.exceptions import FailedPushToEmcip
 
-from data_scripts.setup_bea_fake_data import task_load_fake_bea_data_into_django
+from entry_helper.import_service import RawReportsClient
+
+raw_reports_client = RawReportsClient.from_engine(engine=settings.RAW_REPORTS_ENGINE)
 
 
 class ReportListView(LoginRequiredMixin, ListView):
@@ -32,7 +35,7 @@ class ReportTodoListView(ReportListView):
     }
 
     def get(self, request):
-        task_load_fake_bea_data_into_django()
+        raw_reports_client.update_refresh_list_based_on_last_update_datetime()
         return super().get(request)
 
     def post(self, request):
