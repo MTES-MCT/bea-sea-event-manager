@@ -31,7 +31,7 @@ class Report(models.Model):
                 registration_number=raw_report.get("ship_immat", None),
                 declarative_entity=raw_report.get("declarative_entity"),
                 event_location=raw_report.get("event_location"),
-                event_datetime=datetime.fromisoformat(raw_report.get("event_date")),
+                event_datetime=raw_report.get("event_date"),
                 event_type=raw_report.get("event_type"),
                 ship_total_length=raw_report.get("ship_total_length", None),
                 ship_type=raw_report.get("ship_type", None),

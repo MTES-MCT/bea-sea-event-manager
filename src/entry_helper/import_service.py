@@ -47,7 +47,6 @@ class RawReportsClient:
         self,
         refresh_interval: timedelta = timedelta(hours=1),
     ) -> None:
-        print("try to update")
         def is_time_to_refresh_reports(refresh_interval: timedelta) -> bool:
             if self.last_import_datetime is None:
                 self.last_import_datetime = datetime.now()
