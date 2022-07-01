@@ -18,7 +18,7 @@ OCCURRENCE_ENDPOINT = "occurrence"
 class EmcipAttributeConfig:
     nodes_breadcrumb: list
     code: str
-    regex: str
+    regex: str | None
 
     @classmethod
     def from_raw_content(
