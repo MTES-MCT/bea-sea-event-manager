@@ -1,10 +1,8 @@
 from datetime import datetime, timedelta
 
-from sqlalchemy.engine import Engine, create_engine
+from sqlalchemy.engine import Engine
 
 from entry_helper.models import Report
-
-engine = create_engine("postgresql://cibnav_user:cibnav_pwd@localhost:5432/cibnav_test")
 
 
 class RawReportsClient:
