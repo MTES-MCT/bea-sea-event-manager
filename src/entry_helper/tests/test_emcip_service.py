@@ -2,11 +2,11 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from entry_helper.emcip_service import EmcipBody, AttributeMapping, Occurrence
+from entry_helper.services.emcip import EmcipBody, AttributeMapping, Occurrence
 
 
 @patch(
-    "entry_helper.emcip_service.uuid4",
+    "entry_helper.services.emcip.uuid4",
     side_effect=[
         "b8d9f8f0-f8e9-11ea-b3de-0242ac130004",
         "c8d9f8f1-f8e9-11ea-b3de-0242ac130004",

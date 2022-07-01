@@ -71,7 +71,7 @@ class Occurrence:
     @classmethod
     def from_report(cls, report: Report) -> "Occurrence":
         occurrence_date = (
-            report.event_datetime.strftime("%Y-%m-%dT%H:%MZ")
+            report.event_datetime.strftime("%Y-%m-%dT00:00Z")
             if report.event_datetime
             else None
         )

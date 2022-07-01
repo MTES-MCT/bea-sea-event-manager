@@ -1,4 +1,4 @@
-from entry_helper.emcip_service import BEAToEmcipService, AttributeMapping
+from entry_helper.services.emcip import BEAToEmcipService, AttributeMapping
 from entry_helper.models import Report
 
 attribute_mapping_config = AttributeMapping.from_dict(

@@ -12,7 +12,7 @@ from entry_helper.core import (
 )
 from entry_helper.exceptions import FailedPushToEmcip
 
-from entry_helper.import_service import RawReportsClient
+from entry_helper.services.new_reports import RawReportsClient
 
 raw_reports_client = RawReportsClient.from_engine(engine=settings.RAW_REPORTS_ENGINE)
 
