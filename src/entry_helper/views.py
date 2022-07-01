@@ -15,6 +15,7 @@ from data_scripts.setup_bea_fake_data import task_load_fake_bea_data_into_django
 
 
 class ReportListView(LoginRequiredMixin, ListView):
+    paginate_by = 2
     model = Report
 
     ordering = ["-event_datetime"]
