@@ -30,8 +30,15 @@ Generate a valid `.env` file and provide it to the container with -v option.
 Static files are exposed through a volume mounted in the container.
 
 ```bash
-docker run -d --rm -p 8000:8000 -v /var/www/django_app/static/:/code/static_root/static/ --env-file=.env --name=django_app <project_docker_hub_id>/sea_events_manager
-docker exec django_app poetry run python /code/manage.py collectstatic --noinput
+docker run \
+-d --rm \
+-p 8000:8000 \
+-v /path/to/local/db.sqlite3:/app/db.sqlite3 \
+-v /var/www/django_app/static/:/app/src/static_root/static/ \
+--env-file=.env \
+--name=django_app <project_docker_hub_id>/sea_events_manager
+
+docker exec django_app poetry run python /app/src/manage.py collectstatic --noinput
 ```
 
 # Reverse-proxy
