@@ -15,7 +15,7 @@ OCCURRENCE_ENDPOINT = "occurrence"
 
 
 @dataclass
-class EmcipAttributeConfig:
+class Attribute:
     nodes_breadcrumb: list
     code: str
     regex: str | None
@@ -23,7 +23,7 @@ class EmcipAttributeConfig:
     @classmethod
     def from_raw_content(
         cls, nodes_breadcrumb: list[str], code: str, regex: str
-    ) -> "EmcipAttributeConfig":
+    ) -> "Attribute":
         return cls(
             nodes_breadcrumb=nodes_breadcrumb,
             code=code,
@@ -54,7 +54,7 @@ class AttributeMapping:
             setattr(
                 attribute_mapping,
                 attribute_name,
-                EmcipAttributeConfig.from_raw_content(
+                Attribute.from_raw_content(
                     nodes_breadcrumb=attribute_config["nodes_breadcrumb"],
                     code=attribute_config["code"],
                     regex=attribute_config.get("regex", None),
@@ -112,7 +112,7 @@ class EmcipBody:
         }
 
     def _build_attribute(self, attribute_name: str, attribute_value: str) -> None:
-        emcip_attribute_config: EmcipAttributeConfig = getattr(
+        emcip_attribute_config: Attribute = getattr(
             self.attribute_mapping, attribute_name
         )
         if emcip_attribute_config is None:
@@ -138,12 +138,12 @@ class EmcipBody:
             parent_node_uuid = self.existing_nodes[node_code]
         return parent_node_uuid
 
-    def _validate_value(self, attribute_config: EmcipAttributeConfig, attribute_value: str) -> None:
+    def _validate_value(self, attribute_config: Attribute, attribute_value: str) -> None:
         if attribute_config.regex and not re.match(attribute_config.regex, attribute_value):
             raise ValueError(f"{attribute_value} did not match {attribute_config.regex}")
 
     def _add_attribute(
-        self, attribute_config: EmcipAttributeConfig, attribute_value: str
+        self, attribute_config: Attribute, attribute_value: str
     ) -> None:
         self.attributes.append(
             {
@@ -154,7 +154,7 @@ class EmcipBody:
             }
         )
 
-    def _get_parent_node_uuid(self, attribute_config: EmcipAttributeConfig) -> str:
+    def _get_parent_node_uuid(self, attribute_config: Attribute) -> str:
         parent_node_code = attribute_config.nodes_breadcrumb[-1]
         return self.existing_nodes[parent_node_code]
 
