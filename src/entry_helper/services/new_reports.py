@@ -55,6 +55,15 @@ class RawReportsClient:
         for report in reports:
             report.save()
 
+    def import_new_reports(self) -> None:
+        """
+        Import and store new reports
+        """
+        new_reports = self.retrieve_new_reports()
+        self.store_reports(new_reports)
+        self.last_import_datetime = datetime.now()
+        return
+
     def update_refresh_list_based_on_last_update_datetime(
         self,
         refresh_interval: timedelta = timedelta(hours=1),
@@ -66,7 +75,6 @@ class RawReportsClient:
         """
         def is_time_to_refresh_reports(refresh_interval: timedelta) -> bool:
             if self.last_import_datetime is None:
-                self.last_import_datetime = datetime.now()
                 return True
 
             return bool(datetime.now() > (self.last_import_datetime + refresh_interval))
@@ -74,6 +82,5 @@ class RawReportsClient:
         if not is_time_to_refresh_reports(refresh_interval):
             return
 
-        new_reports = self.retrieve_new_reports()
-        self.store_reports(new_reports)
+        self.import_new_reports()
         return
