@@ -6,6 +6,7 @@ attribute_mapping_config = AttributeMapping.from_dict(
         "occurrence_date": {
             "nodes_breadcrumb": ["TE-28"],
             "code": "TA-346",
+            "regex": "^[12][901][0-9][0-9]-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T00:00Z$"
         },
     }
 )
