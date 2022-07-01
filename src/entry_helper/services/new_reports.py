@@ -6,15 +6,26 @@ from entry_helper.models import Report
 
 
 class RawReportsClient:
+    """
+    A service able to gather preprocessed incident reports.
+
+    It requires an engine to connect to the database containing incident reports.
+    """
     def __init__(self, engine: Engine):
         self.engine = engine
         self.last_import_datetime: datetime = None
 
     @classmethod
     def from_engine(cls, engine: Engine) -> "RawReportsClient":
+        """
+        Initialize a client based on an sqlalchemy Engine.
+        """
         return cls(engine=engine)
 
     def retrieve_new_reports(self) -> list[Report]:
+        """
+        Retrieve new reports if there are some available without saving them.
+        """
         def retrieve_eligible_new_reports() -> list[Report]:
             raw_reports_table_name = "seamis_reports_with_ship"
             with self.engine.connect() as conn:
@@ -38,6 +49,9 @@ class RawReportsClient:
         ]
 
     def store_reports(self, reports: list[Report]) -> None:
+        """
+        Store provided reports
+        """
         for report in reports:
             report.save()
 
@@ -45,6 +59,11 @@ class RawReportsClient:
         self,
         refresh_interval: timedelta = timedelta(hours=1),
     ) -> None:
+        """
+        Helper method handling "intelligent" import of new reports based on the last registered update.
+
+        refresh_interval can be configured through a builtin timedelta object configured at 1 hour by default.
+        """
         def is_time_to_refresh_reports(refresh_interval: timedelta) -> bool:
             if self.last_import_datetime is None:
                 self.last_import_datetime = datetime.now()

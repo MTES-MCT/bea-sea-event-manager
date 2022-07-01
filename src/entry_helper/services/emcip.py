@@ -16,6 +16,14 @@ OCCURRENCE_ENDPOINT = "occurrence"
 
 @dataclass
 class Attribute:
+    """
+    An attribute is the description of an attribute as per EMCIP definition
+
+    it is composed of:
+    - A node breadcrumb which relate in EMCIP interface to group of attributes.
+    - A unique code for EMCIP to match the corresponding attribute
+    - An optionnal validation regex to limit bad API calls (this should be at least the regex used in EMCIP taxonomy)
+    """
     nodes_breadcrumb: list
     code: str
     regex: str | None
@@ -24,6 +32,9 @@ class Attribute:
     def from_raw_content(
         cls, nodes_breadcrumb: list[str], code: str, regex: str
     ) -> "Attribute":
+        """
+        Build new Attribute based on its explicit fields.
+        """
         return cls(
             nodes_breadcrumb=nodes_breadcrumb,
             code=code,
@@ -65,11 +76,19 @@ class AttributeMapping:
 
 @dataclass
 class Occurrence:
+    """
+    An occurrence is a data transport object carrying values formatted for EMCIP.
+
+    it is used as a clean support to generate generative queries into EMCIP.
+    Every attribute is optionnal because data can be missing and the goal of the
+    app is to provide "as many informations as possible" not "at least some informations".
+    """
     occurrence_date: str = None
     occurrence_location: str = None
 
     @classmethod
     def from_report(cls, report: Report) -> "Occurrence":
+        """Based on a Report, build a valid Occurrence at both EMCIP and BEA expected format."""
         occurrence_date = (
             report.event_datetime.strftime("%Y-%m-%dT00:00Z")
             if report.event_datetime
@@ -81,6 +100,9 @@ class Occurrence:
         )
 
     def to_dict(self) -> dict[str, Any]:
+        """
+        Export an occurrence as a dict containing non null attribute values.
+        """
         raw_occurrence_dict = asdict(self)
         return {
             attribute_name: attribute_value
@@ -90,6 +112,14 @@ class Occurrence:
 
 
 class EmcipBody:
+    """
+    An EmcipBody is a complex object gathering necessary data to build the body
+    of a query used in EMCIP API.
+
+    It requires an AttributeMapping in order to perform on demand body formatting.
+
+    It should always be build based on an Occurrence through from_occurrence factory method!
+    """
     def __init__(self, attribute_mapping: AttributeMapping) -> None:
         self.attribute_mapping = attribute_mapping
         self.nodes: list[dict] = []
@@ -100,12 +130,20 @@ class EmcipBody:
     def from_occurrence(
         cls, occurrence: Occurrence, attribute_mapping: AttributeMapping
     ) -> "EmcipBody":
+        """
+        Based on an Occurrence and an AttributeMapping,
+        build a valid body for EMCIP API.
+        """
         body = cls(attribute_mapping=attribute_mapping)
         for attribute_name, attribute_value in occurrence.to_dict().items():
             body._build_attribute(attribute_name, attribute_value)
         return body
 
     def to_json(self) -> dict[str, list]:
+        """
+        Format the EmcipBody as a json-like dictionnary ready to be used in a
+        call to the API "As Is".
+        """
         return {
             "nodes": self.nodes,
             "attributes": self.attributes,
@@ -160,6 +198,13 @@ class EmcipBody:
 
 
 class BEAToEmcipService:
+    """
+    A service able to interoperate french maritime incident reports with european
+    maritime incident reports in EMCIP.
+
+    It requires to be configured with an AttributeMapping in order to be able
+    to properly push the data into EMCIP system.
+    """
     def __init__(self, attributes_mapping: AttributeMapping) -> None:
         self.shared_headers = {
             "Content-Type": "application/json",
@@ -171,6 +216,9 @@ class BEAToEmcipService:
         self.attribute_mapping = attributes_mapping
 
     def push_report_to_emcip(self, report: Report) -> None:
+        """
+        Push a Report into Emcip
+        """
         occurrence = Occurrence.from_report(report)
         self._post_occurrence(occurrence, self.shared_headers)
 
