@@ -1,5 +1,4 @@
 from datetime import datetime
-from dateutil.tz import tzutc
 from unittest.mock import patch
 
 from django.test import TestCase
@@ -28,7 +27,7 @@ class TestSitrepHandling(TestCase):
             registration_number="test_registration_number",
             declarative_entity="test_declarative_entity",
             event_location="test_event_location",
-            event_datetime=datetime(2020, 1, 1, 0, 0, tzinfo=tzutc()),
+            event_datetime=datetime(2020, 1, 1, 0, 0),
             event_type="test_event_type",
             ship_total_length=1.0,
             ship_type="test_ship_type",
