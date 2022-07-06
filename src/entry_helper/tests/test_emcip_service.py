@@ -146,3 +146,30 @@ class TestQueryBodyBuilder(TestCase):
         body = EmcipBody.from_occurrence(occurrence, test_attribute_mapping)
 
         self.assertEqual(body.to_json(), expected_body)
+
+    def test_query_builder_is_validating_if_a_regex_is_given(self, mock_uuid):
+        self.maxDiff = None
+        regex = "^[12][901][0-9][0-9]-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T00:00Z$"
+        valid_occurrence = Occurrence(
+            occurrence_date="2020-01-01T00:00Z",
+        )
+        invalid_occurrence = Occurrence(
+            occurrence_date="2020-01-01T23:43Z"
+        )
+        test_attribute_mapping = AttributeMapping.from_dict(
+            {
+                "occurrence_date": {
+                    "nodes_breadcrumb": ["TE-28", "TE-24"],
+                    "code": "TA-346",
+                    "regex": regex
+                },
+            }
+        )
+
+        EmcipBody.from_occurrence(valid_occurrence, test_attribute_mapping)
+
+        with self.assertRaises(ValueError) as e:
+            EmcipBody.from_occurrence(invalid_occurrence, test_attribute_mapping)
+
+        self.assertIn(invalid_occurrence.occurrence_date, str(e.exception))
+        self.assertIn(regex, str(e.exception))

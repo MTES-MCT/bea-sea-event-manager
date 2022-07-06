@@ -1,4 +1,5 @@
 import os
+import re
 from dataclasses import dataclass, asdict
 from pprint import pprint
 from typing import Any
@@ -17,14 +18,16 @@ OCCURRENCE_ENDPOINT = "occurrence"
 class EmcipAttributeConfig:
     nodes_breadcrumb: list
     code: str
+    regex: str | None
 
     @classmethod
     def from_raw_content(
-        cls, nodes_breadcrumb: list[str], code: str
+        cls, nodes_breadcrumb: list[str], code: str, regex: str
     ) -> "EmcipAttributeConfig":
         return cls(
             nodes_breadcrumb=nodes_breadcrumb,
             code=code,
+            regex=regex,
         )
 
 
@@ -40,6 +43,7 @@ class AttributeMapping:
             "occurrence_date": {
                 "nodes_breadcrumb": ["TE-28"],
                 "code": "TA-346",
+                "regex: "^[12][901][0-9][0-9]-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T00:00Z$",
             }
         }
         values of nodes_breadcrumb are a list in descending order
@@ -53,6 +57,7 @@ class AttributeMapping:
                 EmcipAttributeConfig.from_raw_content(
                     nodes_breadcrumb=attribute_config["nodes_breadcrumb"],
                     code=attribute_config["code"],
+                    regex=attribute_config.get("regex", None),
                 ),
             )
         return attribute_mapping
@@ -113,6 +118,7 @@ class EmcipBody:
         if emcip_attribute_config is None:
             return
 
+        self._validate_value(emcip_attribute_config, attribute_value)
         self._add_missing_nodes(emcip_attribute_config.nodes_breadcrumb)
         self._add_attribute(emcip_attribute_config, attribute_value)
 
@@ -131,6 +137,10 @@ class EmcipBody:
                 )
             parent_node_uuid = self.existing_nodes[node_code]
         return parent_node_uuid
+
+    def _validate_value(self, attribute_config: EmcipAttributeConfig, attribute_value: str) -> None:
+        if attribute_config.regex and not re.match(attribute_config.regex, attribute_value):
+            raise ValueError(f"{attribute_value} did not match {attribute_config.regex}")
 
     def _add_attribute(
         self, attribute_config: EmcipAttributeConfig, attribute_value: str
