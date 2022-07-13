@@ -1,6 +1,12 @@
 # sea-event-manager-bea
+## Purpose
+The purpose of this project is to ease the reporting of national sea events by the "BEA Mer" to the european sea event database EMCIP (owned by EMSA).
 
-Entry assistance tool for BEAMer investigators to the EMCIP database.
+## Main features:
+- Gather all sea events as reported by the CROSS to the BEA Mer
+- Allow the user to discard a sea event as "ignored" if it is not relevant to the EMCIP database
+- Allow the user to push as much information as possible to the EMCIP database (as a draft report) before completing the input in EMCIP UI.
+- Allow the user to explore ignored and pushed reports from the app.
 
 # Deploying the app
 ## Requirements
