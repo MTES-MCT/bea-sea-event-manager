@@ -18,7 +18,7 @@ raw_reports_client = RawReportsClient.from_engine(engine=settings.RAW_REPORTS_EN
 
 
 class ReportListView(LoginRequiredMixin, ListView):
-    paginate_by = 2
+    paginate_by = settings.NB_ITEM_PER_PAGE
     model = Report
 
     ordering = ["-event_datetime"]
